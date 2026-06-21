@@ -1,0 +1,155 @@
+:root {
+    --primary: #2563eb;
+    --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    --glass: rgba(255, 255, 255, 0.95);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.login-card {
+    background: var(--glass);
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.login-card:hover { transform: translateY(-5px); }
+
+.brand-icon {
+    font-size: 48px;
+    color: var(--primary);
+    margin-bottom: 1rem;
+}
+
+h2 {
+    color: #1e293b;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+}
+
+p {
+    color: #64748b;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.2rem;
+    text-align: left;
+}
+
+/* Icons stay centered in the input box */
+.input-group i, 
+.show-password {
+    position: absolute;
+    top: 25px; 
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 20px;
+    z-index: 2;
+    pointer-events: none; /* Let clicks pass through to input */
+}
+
+.input-group i { left: 15px; }
+.show-password { 
+    right: 15px; 
+    cursor: pointer; 
+    pointer-events: auto; /* Enable clicks for the eye icon */
+}
+
+/* --- Floating Label Core Logic --- */
+
+.floating-label {
+    position: absolute;
+    left: 45px; /* Matches input padding-left */
+    top: 25px;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 0.95rem;
+    pointer-events: none;
+    transition: all 0.2s ease;
+    background-color: transparent;
+    padding: 0 4px;
+    z-index: 3;
+}
+
+input {
+    width: 100%;
+    padding: 18px 45px 8px 45px; /* Adjusted padding to give space for label top */
+    height: 50px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: all 0.2s ease;
+    background-color: white;
+}
+
+/* Animation: When focused OR when input is not empty */
+input:focus ~ .floating-label,
+input:not(:placeholder-shown) ~ .floating-label {
+    top: 0px;
+    left: 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--primary);
+    background-color: white; /* Creates the "inline" cutout look */
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* --- Rest of Styles --- */
+
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    margin-top: 1rem;
+}
+
+.btn-login:hover { background: #1d4ed8; }
+
+.validation-msg {
+    display: block;
+    font-size: 0.75rem;
+    color: #ef4444; 
+    margin-top: 4px;
+    margin-left: 5px;
+    min-height: 1rem;
+}
+
+input.input-validation-error {
+    border-color: #ef4444 !important;
+}
+
+input.input-validation-error ~ .floating-label {
+    color: #ef4444;
+}

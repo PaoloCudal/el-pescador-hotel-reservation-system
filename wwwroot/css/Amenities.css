@@ -1,0 +1,481 @@
+﻿:root {
+    --primary-color: #0A1A2F;
+    --gold: #e0a800;
+    --gold-accent: #D4AF37;
+    --muted: #6c757b;
+    --card-bg: #fff;
+    --glass: rgba(255,255,255,0.6);
+}
+
+body {
+    background: #F2F6FA;
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+}
+
+/* NAVBAR */
+#mainNav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    overflow: visible;
+    z-index: 1100;
+    background: rgba(10,26,47,0.95);
+    transition: background .35s ease, box-shadow .35s ease, padding .2s;
+    padding: .65rem 0;
+}
+
+    #mainNav,
+    #mainNav .container,
+    #mainNav .navbar-collapse {
+        overflow: visible !important;
+    }
+
+    #mainNav .navbar-brand {
+        color: var(--gold-accent);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    #mainNav .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+        transition: color 0.3s ease;
+    }
+
+    #mainNav .nav-link {
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+    }
+
+        #mainNav .nav-link:hover {
+            color: var(--gold-accent) !important;
+        }
+
+/* Profile circle */
+.profile-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gold-accent);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    cursor: pointer;
+}
+
+    .profile-circle:hover {
+        background: var(--gold-accent);
+        color: #000;
+    }
+
+.amenities-hero {
+    height: 420px;
+    background-image: url('/images/amenities.JPG');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    margin-top: 5rem;
+    position: relative;
+}
+
+    .amenities-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(10,26,47,0.35), rgba(10,26,47,0.45));
+    }
+
+    .amenities-hero .hero-inner {
+        position: relative;
+        z-index: 2;
+    }
+
+    .amenities-hero h1 {
+        font-family: 'Playfair Display', serif;
+        color: var(--gold);
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+
+/* Grid */
+.container-amenities {
+    max-width: 1100px;
+    margin: 0 auto 4rem;
+    padding: 0 16px;
+}
+
+/* Card */
+.amenity-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 46px rgba(13,59,102,0.06);
+    transition: transform .35s ease, box-shadow .35s ease;
+    cursor: pointer;
+    border: 1px solid rgba(10,26,47,0.04);
+    margin-top: 3rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+    .amenity-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 70px rgba(10,26,47,0.12);
+    }
+
+.amenity-image {
+    height: 220px;
+    width: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .7s ease;
+}
+
+.amenity-card:hover .amenity-image {
+    transform: scale(1.04);
+}
+
+.amenity-body {
+    padding: 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; 
+    text-align: center;          
+    gap: 6px;                    
+}
+
+.amenity-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    margin-top: 0; 
+}
+
+.amenity-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.4;
+    font-size: 0.82rem;         
+    color: var(--muted);
+    margin: 0;
+}
+
+.amenity-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-amenity {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: .6rem 1rem;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(208,170,46,0.18);
+    transition: transform .18s ease, box-shadow .18s ease;
+}
+
+    .btn-amenity:hover {
+        background: var(--gold-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(208,170,46,0.28);
+    }
+
+    
+.meta-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    min-height: 72px;  
+    align-content: flex-start;
+}
+
+.chip {
+    background: #fff8e6;
+    color: var(--primary-color);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .85rem;
+    border: 1px solid rgba(0,0,0,0.03);
+}
+
+
+/* Modal header styling (same gold accent as Rooms) */
+.modal-header {
+    background: #0A1A2F;
+    color: var(--gold);
+    border-bottom: none;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+/* Modal body for clean contrast */
+.modal-body {
+    background-color: #fff;
+    color: var(--primary-color);
+    padding: 1.5rem;
+}
+
+/* Book button like Rooms */
+.btn-amenity {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+    box-shadow: 0 10px 25px rgba(208,170,46,0.25);
+}
+
+    .btn-amenity:hover {
+        background: var(--gold-accent);
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(208,170,46,0.35);
+    }
+
+/* Gold “chips” (tags under description) */
+.chip {
+    background: #fff8e6;
+    color: var(--primary-color);
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: 1px solid rgba(208,170,46,0.3);
+}
+
+/* Gold accent for price text */
+.price-tag {
+    font-weight: 800;
+    color: var(--gold);
+    font-size: 1.1rem;
+}
+
+/* Make modal images pop */
+.modal-body img {
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Modal footer clean-up */
+.modal-footer {
+    border-top: none;
+    background: transparent;
+}
+
+/* fade-in utility */
+.fade-in {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: all .8s cubic-bezier(.2,.9,.2,1);
+}
+
+    .fade-in.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+/* Resort Highlights Section */
+.resort-highlights {
+    background: #fafafa;
+    padding-bottom: 70px;
+}
+
+.highlight-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+    .highlight-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+.highlight-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.highlight-body {
+    padding: 18px;
+    text-align: center;
+}
+
+.highlight-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+
+/* Wide layout card for Food Crawl */
+.highlight-card.wide .highlight-image {
+    height: 280px;
+}
+
+/* Fade in */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease-out;
+}
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+/* OPTIONAL: Premium feel for “Visit” modals */
+.modal-content {
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modal-body img {
+    border-radius: 12px;
+}
+
+.modal-body p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #555;
+}
+/* Outline secondary button matching theme (for Close) */
+.btn-outline-secondary {
+    color: var(--primary-color);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: var(--gold);
+        color: #000;
+        border-color: var(--gold);
+        transform: translateY(-2px);
+    }
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1) brightness(2);
+}
+
+footer {
+    background: linear-gradient(135deg, #001f3f, #003366);
+    color: #f1f1f1;
+    text-align: center;
+    margin-top: 10rem;
+    position: relative;
+    z-index: 10;
+}
+
+    footer p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+/* Match hard-coded modal look */
+.amenity-modal-content {
+    padding: 18px;
+}
+
+.carousel,
+.carousel-inner,
+.carousel-item {
+    height: 100%;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+/* Prevent modal jump */
+.modal-body {
+    padding: 1rem;
+}
+
+.chip {
+    display: inline-block;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+.skeleton-card {
+    pointer-events: none;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 180px;
+    border-radius: 12px;
+    background: #e5e7eb;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+    background: #e5e7eb;
+}
+
+.shimmer {
+    background: linear-gradient( 90deg, #e5e7eb 25%, #f3f4f6 37%, #e5e7eb 63% );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+#profileDropdown {
+    position: relative;
+}
+
+    #profileDropdown .dropdown-menu {
+        position: absolute !important;
+        z-index: 1200 !important;
+    }
+
+#amenitiesGrid .col-md-6,
+#amenitiesGrid .col-lg-4 {
+    display: flex;
+}

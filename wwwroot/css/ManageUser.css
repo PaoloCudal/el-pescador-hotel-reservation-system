@@ -1,0 +1,469 @@
+﻿:root {
+    --tropical-blue: #1a7fe0;
+    --tropical-blue-dark: #166bbf;
+    --bg-soft: #eaf4ff;
+    --border-soft: #d5e7f7;
+    --text-dark: #1f2d3d;
+}
+
+/* Body and page layout */
+body {
+    font-family: Inter, sans-serif;
+    background-color: var(--bg-soft);
+    color: var(--text-dark);
+}
+
+.update-page {
+    margin-top: 0;
+    padding-top: 0;
+    background-color: var(--bg-soft);
+}
+
+h2 {
+    color: var(--tropical-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* ================= SEARCH BAR ================= */
+.search-wrapper {
+    position: relative;
+    width: 500px; /* pick your size */
+}
+
+.search-input {
+    padding-left: 2.4rem;
+    border-radius: 14px;
+    height: 42px;
+    background: white;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+.search-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1.1rem;
+}
+
+.btn.btn-sort-category {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.45rem 0.75rem;
+    background-color: #dcecff !important;
+    border: 1px solid var(--border-soft);
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 12px !important;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+    .btn.btn-sort-category:hover {
+        background-color: rgba(26,127,224,0.18) !important;
+    }
+
+/* Form controls */
+.form-select,
+.form-control {
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    padding-right: 2.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        outline: none;
+        border-color: var(--tropical-blue);
+        box-shadow: 0 0 6px rgba(26, 127, 224, 0.3);
+    }
+
+/* User table */
+.user-table tr {
+    transition: background 0.2s ease;
+}
+
+    .user-table tr:hover {
+        background: rgba(26, 127, 224, 0.08);
+    }
+
+/* Generic modal */
+.modal-content {
+    border: none;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    animation: fadeScale 0.25s ease;
+}
+
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Badges */
+.badge {
+    border-radius: 12px;
+    padding: 6px 10px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Status colors */
+.badge-status-confirmed {
+    background-color: #1a7fe0;
+}
+
+.badge-status-cancelled {
+    background-color: #dc3545;
+}
+
+.badge-status-pending {
+    background-color: #ffc107;
+    color: #000;
+}
+
+.badge-status-confirmed,
+.badge-status-cancelled,
+.badge-status-pending {
+    font-size: 0.85rem;
+    padding: 5px 12px;
+}
+
+/* Booking table hover */
+#bookingTableBody tr:hover {
+    background-color: rgba(26, 127, 224, 0.08);
+}
+
+/* Carousel images */
+#facilityCarousel .carousel-item img {
+    border-radius: 12px;
+    max-height: 350px;
+    object-fit: cover;
+}
+
+/* Card titles */
+#bookingCardsContainer .card h6,
+#favoritesSwipeContainer .card h6 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Favorites swipe container */
+#favoritesSwipeContainer {
+    display: flex;
+    gap: 0.75rem;
+    overflow-x: auto;
+    padding-bottom: 0.75rem;
+    scrollbar-width: none;
+}
+
+    #favoritesSwipeContainer::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Card base - Bookings and Favorites */
+    #bookingCardsContainer .card,
+    #favoritesSwipeContainer .card {
+        border-radius: 12px;
+        background-color: rgba(240, 245, 255, 0.95); /* warmer and more opaque soft blue */
+        border: 1px solid rgba(200, 220, 240, 1); /* more pronounced, visible outline */
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.25s ease;
+        padding: 0.75rem;
+    }
+
+        /* Hover effect */
+        #bookingCardsContainer .card:hover,
+        #favoritesSwipeContainer .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18); /* slightly stronger shadow for pop */
+        }
+
+
+        #bookingCardsContainer .card h6,
+        #favoritesSwipeContainer .card h6 {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        #bookingCardsContainer .card small,
+        #favoritesSwipeContainer .card p {
+            font-size: 0.85rem;
+            color: #555;
+        }
+
+        #favoritesSwipeContainer .card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 14px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+/* Booking history cards */
+#bookingCardsContainer .card {
+    border-radius: 20px;
+    padding: 1rem;
+}
+
+/* Horizontal favorite cards */
+#favoritesSwipeContainer .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 260px;
+    max-width: 280px;
+    border-radius: 18px;
+    padding: 0.6rem;
+}
+
+    #favoritesSwipeContainer .card .card-body {
+        padding: 0 0.6rem;
+    }
+
+/* User history modal */
+#userHistoryModal .modal-content {
+    background: linear-gradient(180deg, #f9fbff 0%, #eef4ff 100%);
+    border-radius: 20px;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+}
+
+#userHistoryModal .modal-body {
+    background-color: transparent; 
+    padding: 1.25rem;
+}
+
+
+#userHistoryModal h6 {
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--tropical-blue-dark);
+}
+
+.user-modal-header {
+    background: linear-gradient(135deg, var(--tropical-blue), var(--tropical-blue-dark));
+    border-bottom: none;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* User icon container */
+.user-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
+}
+
+    .user-avatar i {
+        font-size: 1.4rem;
+        color: #ffffff;
+    }
+
+/* Modal title in header */
+.user-modal-header h5,
+.user-modal-header .modal-title {
+    color: #ffffff !important;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    margin: 0;
+}
+
+/* Close button polish */
+.user-modal-header .btn-close {
+    filter: invert(1);
+    opacity: 0.85;
+}
+
+    .user-modal-header .btn-close:hover {
+        opacity: 1;
+    }
+
+/* Close button polish */
+.user-modal-header .btn-close {
+    filter: invert(1); /* make it visible on blue header */
+    opacity: 0.85;
+    outline: none; /* remove focus outline */
+    box-shadow: none; /* remove focus shadow */
+}
+
+    .user-modal-header .btn-close:hover,
+    .user-modal-header .btn-close:focus {
+        opacity: 1;
+        outline: none; /* ensure outline stays removed */
+        box-shadow: none;
+    }
+
+/* Modal content */
+#dynamicFacilityModalsContainer .modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, #f9fbff 0%, #eef4ff 100%);
+    animation: fadeScale 0.25s ease;
+}
+
+/* Modal header */
+#dynamicFacilityModalsContainer .modal-header {
+    background: linear-gradient(135deg, var(--tropical-blue), var(--tropical-blue-dark));
+    border-bottom: none;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+}
+
+    /* Modal title */
+    #dynamicFacilityModalsContainer .modal-header h5 {
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        margin: 0;
+    }
+
+    /* Close button */
+    #dynamicFacilityModalsContainer .modal-header .btn-close {
+        filter: invert(1);
+        opacity: 0.85;
+    }
+
+        #dynamicFacilityModalsContainer .modal-header .btn-close:hover {
+            opacity: 1;
+        }
+
+/* Modal body */
+#dynamicFacilityModalsContainer .modal-body {
+    padding: 1.5rem;
+    background-color: transparent;
+}
+
+/* Carousel container */
+#dynamicFacilityModalsContainer .carousel {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
+/* Carousel images */
+#dynamicFacilityModalsContainer .carousel-item img {
+    width: 100%;
+    max-height: 380px;
+    object-fit: cover;
+    border-radius: 16px;
+    transition: transform 0.3s ease;
+}
+
+    #dynamicFacilityModalsContainer .carousel-item img:hover {
+        transform: scale(1.02);
+    }
+
+/* Thumbnails */
+#dynamicFacilityModalsContainer .thumb {
+    border-radius: 8px;
+    border: 2px solid transparent;
+    transition: border 0.25s, transform 0.2s;
+}
+
+    #dynamicFacilityModalsContainer .thumb:hover {
+        transform: scale(1.05);
+        border-color: var(--tropical-blue);
+    }
+
+    /* Highlight active thumbnail */
+    #dynamicFacilityModalsContainer .thumb.border-primary {
+        border-color: var(--tropical-blue-dark);
+    }
+
+/* Right section (details) */
+#dynamicFacilityModalsContainer .modal-body .col-md-5 {
+    padding: 1rem 1.25rem;
+}
+
+#dynamicFacilityModalsContainer h4 {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+#dynamicFacilityModalsContainer p {
+    color: #555;
+    font-size: 0.95rem;
+}
+
+/* Price styling */
+#dynamicFacilityModalsContainer strong {
+    color: var(--tropical-blue-dark);
+}
+
+/* Buttons */
+#dynamicFacilityModalsContainer .btn-gold {
+    background-color: #ffc107;
+    color: #1f2d3d;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    #dynamicFacilityModalsContainer .btn-gold:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+#dynamicFacilityModalsContainer .btn-outline-secondary {
+    border-radius: 12px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    #dynamicFacilityModalsContainer .col-md-7,
+    #dynamicFacilityModalsContainer .col-md-5 {
+        padding: 0.5rem;
+    }
+
+    #dynamicFacilityModalsContainer .carousel-item img {
+        max-height: 250px;
+    }
+
+    #dynamicFacilityModalsContainer .thumb {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Fade & scale animation */
+@keyframes fadeScale {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

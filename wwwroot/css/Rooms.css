@@ -1,0 +1,785 @@
+﻿:root {
+    --primary-color: #0A1A2F;
+    --secondary-color: #1E3A8A;
+    --gold-accent: #D4AF37;
+    --gold: #e0a800;
+    --neutral-bg: #FAF9F6;
+    --beige: #FBF1E3;
+    --muted: #6c757b;
+    --sand-bg: #F5E6C8;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F2F6FA;
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+/* NAVBAR */
+#mainNav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+    background: rgba(10,26,47,0.95);
+    transition: background .35s ease, box-shadow .35s ease, padding .2s;
+    padding: .65rem 0;
+}
+
+    #mainNav .navbar-brand {
+        color: var(--gold-accent);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    #mainNav .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+        transition: color 0.3s ease;
+    }
+
+    #mainNav .nav-link {
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+    }
+
+        #mainNav .nav-link:hover {
+            color: var(--gold-accent) !important;
+        }
+
+/* Profile circle */
+.profile-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gold-accent);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    cursor: pointer;
+}
+
+    .profile-circle:hover {
+        background: var(--gold-accent);
+        color: #000;
+    }
+
+/* banner */
+.parallax-banner {
+    position: relative;
+    width: 100%;
+    height: 420px;
+    background-image: url('/images/32a759cc-88c8-4823-94a8-0c64f3bd616a.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    margin-top: 5rem;
+}
+
+.parallax-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(10,26,47,0.35), rgba(10,26,47,0.35));
+    mix-blend-mode: multiply;
+}
+
+.parallax-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    padding: 2rem;
+}
+
+    .parallax-content h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 3rem;
+        letter-spacing: 1px;
+        margin-bottom: .5rem;
+        font-weight: 800;
+        text-shadow: 0 6px 24px rgba(0,0,0,0.4);
+    }
+
+    .parallax-content p.lead {
+        font-size: 1.15rem;
+        opacity: .95;
+        margin-bottom: 1rem;
+    }
+
+/* page layout */
+.page {
+    max-width: 1150px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+.search-sort-bar {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 2rem 0 3rem;
+}
+
+/* SEARCH */
+.search-box {
+    flex: 1 1 260px;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    background: #fff;
+    padding: .55rem 1rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+    .search-box input {
+        border: none;
+        outline: none;
+        width: 100%;
+    }
+
+/* SORT */
+select.sort {
+    flex: 0 0 auto;
+    min-width: 180px;
+    border-radius: 999px;
+    padding: .5rem 1rem;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+/* FAVORITES */
+.controls-right {
+    flex: 0 0 auto;
+}
+
+#toggleFavoritesBtn {
+    white-space: nowrap;
+    border-radius: 12px;
+    background: #fff;
+    padding: .5rem .9rem;
+    border: 1px solid rgba(13,59,102,0.06);
+}
+
+@media (max-width: 576px) {
+    .search-sort-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    select.sort,
+    #toggleFavoritesBtn {
+        width: 100%;
+    }
+}
+
+/* building cards select grid */
+.building-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+}
+
+.building-card {
+    flex: 0 0 calc(50% - 12px);
+    max-width: calc(50% - 12px);
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+    cursor: pointer;
+    box-shadow: 0 12px 36px rgba(0,0,0,.08);
+    transition: transform .28s ease;
+}
+
+    .building-card:hover {
+        transform: translateY(-6px);
+    }
+
+    .building-card img {
+        width: 100%;
+        height: 260px;
+        object-fit: cover;
+        display: block;
+    }
+
+/* Stack on mobile */
+@media (max-width: 768px) {
+    .building-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+.building-caption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 1rem;
+    text-align: center;
+    color: #fff;
+    background: linear-gradient( to top, rgba(0,0,0,.65), rgba(0,0,0,.15), transparent );
+}
+
+/* rooms grid */
+.rooms-section {
+    display: none;
+    padding: 0 1.25rem 2.5rem;
+}
+
+.rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 360px);
+    gap: 22px;
+    justify-content: center;
+}
+
+.room-card {
+    background: #fff;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 360px;
+    overflow: hidden;
+    box-shadow: 0 18px 46px rgba(13,59,102,0.06);
+    cursor: pointer;
+    position: relative;
+    transition: transform .25s;
+}
+
+    .room-card:hover {
+        transform: translateY(-6px)
+    }
+
+    .room-card img {
+        display: block;
+        width: 100%;
+        height: 160px;
+        object-fit: cover
+    }
+
+    .room-card h5 {
+        font-family: 'Playfair Display',serif;
+        margin: .6rem 1rem;
+        font-size: 1.1rem
+    }
+
+    .room-card p {
+        margin: 0 1rem 1rem;
+        color: var(--muted)
+    }
+
+.price {
+    font-weight: 800;
+    color: var(--gold);
+    margin-left: 1rem;
+    margin-bottom: 1rem
+}
+
+/* favorite icon */
+.fav-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 1.2rem;
+    color: #fff;
+    background: rgba(0,0,0,.35);
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center
+}
+
+    .fav-icon.text-danger {
+        color: #e74c3c !important;
+        background: rgba(255,255,255,0.92);
+    }
+
+/* favorites panel */
+#favoritesPanel {
+    display: none;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(13,59,102,0.06);
+    margin-top: 1rem
+}
+
+.favorites-thumbnail {
+    display: inline-block;
+    margin: 6px;
+    width: 108px;
+    text-align: center;
+    cursor: pointer
+}
+
+    .favorites-thumbnail img {
+        width: 100%;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px
+    }
+
+.btn--gold,
+.btn-gold,
+.btn-book-modal {
+    background-color: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(208,170,46,0.25);
+}
+
+    .btn--gold:hover,
+    .btn-gold:hover,
+    .btn-book-modal:hover {
+        background-color: var(--gold-accent);
+        color: #000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 18px rgba(208,170,46,0.35);
+    }
+
+/* Outline secondary button matching theme (for Close) */
+.btn-outline-secondary {
+    color: var(--primary-color);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-secondary:hover {
+        background-color: var(--gold);
+        color: #000;
+        border-color: var(--gold);
+        transform: translateY(-2px);
+    }
+
+/* Check Room Availability toggle button */
+.btn-availability-toggle {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(208,170,46,0.25);
+    transition: all 0.3s ease;
+}
+
+    .btn-availability-toggle:hover {
+        background: var(--gold-accent);
+        color: #000;
+        transform: translateY(-2px);
+    }
+
+/* Smooth rotation for the icon */
+.rotate-icon {
+    transition: transform 0.3s ease;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+/* modal premium look */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.26)
+}
+
+.modal-gallery img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    border-radius: 8px
+}
+
+.modal-thumb {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-right: 8px;
+    cursor: pointer
+}
+
+.banner h1 {
+    font-size: 1.9rem
+}
+
+.no-results {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #888;
+}
+
+/* ============================= */
+/* UPDATED SLIM FOOTER STYLING  */
+/* ============================= */
+footer {
+    background: linear-gradient(135deg, #001f3f, #003366);
+    color: #f1f1f1;
+    text-align: center;
+    padding: 1.5rem 1rem;
+    width: 100%;
+    margin-top: auto;
+    z-index: 10;
+}
+
+    footer p {
+        margin: 0;
+        font-size: 0.9rem;
+    }
+
+    footer .btn {
+        background: #e0a800;
+        color: #fff;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-bottom: 0.75rem !important;
+    }
+
+        footer .btn:hover {
+            transform: scale(1.05);
+            background: #e0a800;
+            color: #000;
+        }
+
+/* ============================= */
+/* Skeleton loading for favorites */
+/* ============================= */
+.skeleton {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+    .skeleton::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -150px;
+        height: 100%;
+        width: 150px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        animation: loadingShimmer 1.2s infinite;
+    }
+
+@keyframes loadingShimmer {
+    0% { left: -150px; }
+    100% { left: 100%; }
+}
+
+.favorites-thumbnail.skeleton {
+    width: 108px;
+    height: 120px;
+    display: inline-block;
+    margin: 6px;
+    border-radius: 8px;
+    background-color: #ddd;
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 180px;
+    background: #e0e0e0;
+}
+
+.skeleton-text {
+    height: 16px;
+    background: #e0e0e0;
+    margin: 6px 12px;
+    border-radius: 4px;
+}
+
+    .skeleton-text.short {
+        width: 60%;
+    }
+
+.skeleton-btn {
+    height: 36px;
+    margin: 12px;
+    background: #e0e0e0;
+    border-radius: 6px;
+}
+
+.badge {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+    padding: 0.45em 0.7em;
+    border-radius: 0.5rem;
+}
+
+@keyframes pulse {
+    0% { background-color: #f5f5f5; }
+    50% { background-color: #e0e0e0; }
+    100% { background-color: #f5f5f5; }
+}
+
+.flatpickr-calendar {
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18) !important;
+    border: none !important;
+    font-family: 'Poppins', sans-serif !important;
+    overflow: hidden;
+}
+
+.flatpickr-months {
+    background: var(--primary-color) !important;
+    padding: 8px 0 4px !important;
+}
+
+.flatpickr-month {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+.flatpickr-current-month {
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+.flatpickr-current-month .numInputWrapper span {
+    border-color: rgba(255,255,255,0.2) !important;
+}
+
+.flatpickr-current-month input.cur-year {
+    color: #fff !important;
+}
+
+.flatpickr-months .flatpickr-prev-month,
+.flatpickr-months .flatpickr-next-month {
+    color: #fff !important;
+    fill: #fff !important;
+}
+
+.flatpickr-months .flatpickr-prev-month:hover svg,
+.flatpickr-months .flatpickr-next-month:hover svg {
+    fill: var(--gold-accent) !important;
+}
+
+.flatpickr-weekdays {
+    background: var(--primary-color) !important;
+}
+
+span.flatpickr-weekday {
+    background: var(--primary-color) !important;
+    color: rgba(255,255,255,0.6) !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px;
+}
+
+.flatpickr-day {
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    max-width: 36px !important;
+    color: #333 !important;
+    transition: background 0.15s, color 0.15s;
+}
+
+.flatpickr-day:hover:not(.flatpickr-disabled):not(.booked-date) {
+    background: var(--sand-bg) !important;
+    border-color: var(--gold-accent) !important;
+    color: #333 !important;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background: var(--gold-accent) !important;
+    border-color: var(--gold-accent) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+}
+
+.flatpickr-day.inRange {
+    background: var(--sand-bg) !important;
+    border-color: var(--sand-bg) !important;
+    color: #333 !important;
+}
+
+.flatpickr-day.flatpickr-disabled {
+    color: #ccc !important;
+}
+
+.flatpickr-day.booked-date {
+    background: #fee2e2 !important;
+    border-color: #fca5a5 !important;
+    color: #dc2626 !important;
+    text-decoration: line-through !important;
+    cursor: not-allowed !important;
+    pointer-events: none !important;
+}
+
+
+.fp-input-wrapper {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.fp-input-wrapper .fp-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 15px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.fp-input-wrapper input.flatpickr-input {
+    width: 100%;
+    padding: 10px 12px 10px 36px;
+    border: 1.5px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+.fp-input-wrapper input.flatpickr-input:focus {
+    border-color: var(--gold-accent);
+    box-shadow: 0 0 0 3px rgba(212,175,55,0.15);
+    outline: none;
+}
+
+.fp-input-wrapper input.flatpickr-input::placeholder {
+    color: #aaa;
+}
+
+
+.date-legend {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--muted);
+    flex-wrap: wrap;
+}
+
+.date-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.legend-dot.available {
+    background: var(--sand-bg);
+    border: 1px solid var(--gold-accent);
+}
+
+.legend-dot.booked {
+    background: #fee2e2;
+    border: 1px solid #fca5a5;
+}
+
+.legend-dot.selected {
+    background: var(--gold-accent);
+}
+
+.flatpickr-calendar {
+    z-index: 99999 !important;
+}
+
+/* Fix month/year dropdown clipping inside calendar */
+.flatpickr-calendar.open {
+    overflow: visible !important;
+}
+
+.flatpickr-months {
+    overflow: visible !important;
+    position: relative;
+}
+
+.flatpickr-current-month {
+    overflow: visible !important;
+}
+
+.flatpickr-monthDropdownContainer,
+.numInputWrapper {
+    overflow: visible !important;
+    position: relative;
+    z-index: 100001 !important;
+}
+
+/* The actual month <select> dropdown */
+.flatpickr-monthDropdownContainer select,
+.flatpickr-current-month select.flatpickr-monthDropdown-months {
+    position: relative;
+    z-index: 100002 !important;
+    background: var(--primary-color) !important;
+    color: #fff !important;
+    border: 1px solid rgba(255,255,255,0.3) !important;
+    border-radius: 4px !important;
+    padding: 2px 4px !important;
+    cursor: pointer;
+    -webkit-appearance: auto;
+    appearance: auto;
+}
+
+.flatpickr-current-month select.flatpickr-monthDropdown-months option {
+    background: var(--primary-color) !important;
+    color: #fff !important;
+}
+
+/* Year input */
+.flatpickr-current-month .numInputWrapper input {
+    background: transparent !important;
+    color: #fff !important;
+}
+
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+.flatpickr-calendar {
+    z-index: 99999 !important;
+    overflow: visible !important;
+}

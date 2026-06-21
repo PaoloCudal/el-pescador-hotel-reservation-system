@@ -1,0 +1,111 @@
+﻿/* ==================================================
+   MY ACCOUNT MODAL – SHARED (Rooms is the reference)
+   ================================================== */
+
+#userProfileModal .modal-content {
+    border-radius: 18px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.35);
+}
+
+/* ================= HEADER ================= */
+
+#userProfileModal .modal-header {
+    background: linear-gradient(135deg, #000000, #000000) !important;
+    padding: 1.4rem 1.75rem
+}
+
+
+    /* FORCE HEADER TITLE + ICON TO GOLD */
+    #userProfileModal .modal-header .modal-title,
+    #userProfileModal .modal-header i,
+    #userProfileModal .modal-header .bi::before {
+        color: var(--gold-accent) !important;
+    }
+
+
+
+#userProfileModal .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--gold-accent) !important;
+}
+
+
+/* Close button */
+#userProfileModal .btn-close {
+    filter: invert(1);
+    opacity: 0.85;
+}
+
+    #userProfileModal .btn-close:hover {
+        opacity: 1;
+    }
+
+/* ================= BODY ================= */
+
+#userProfileModal .modal-body {
+    background: var(--neutral-bg);
+    padding: 1.75rem;
+    color: var(--primary-color);
+}
+
+#userProfileModal .profile-label {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--muted);
+}
+
+#userProfileModal .profile-value {
+    font-weight: 600;
+    font-size: 1.05rem;
+    color: var(--primary-color);
+}
+
+/* ================= BOOKINGS ================= */
+
+#userProfileModal .booking-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+    #userProfileModal .booking-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 32px rgba(0, 0, 0, 0.12);
+    }
+
+/* ================= FOOTER ================= */
+
+#userProfileModal .modal-footer {
+    background: #fff;
+    border-top: none;
+    padding: 1rem 1.75rem;
+}
+
+#userProfileModal .btn-outline-secondary {
+    border: 2px solid var(--gold);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+    #userProfileModal .btn-outline-secondary:hover {
+        background: var(--gold);
+        color: #000;
+    }
+
+#activeBookingsList {
+    list-style: none;
+}
+
+#activeBookingsList .card::after,
+#activeBookingsList .card-body::after,
+#activeBookingsList div::after {
+    content: none !important;
+    display: none !important;
+}

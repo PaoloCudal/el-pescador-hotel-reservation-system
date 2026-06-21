@@ -1,0 +1,127 @@
+﻿@page
+@model HotelReservationWeb.Pages.RequestModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Booking Confirmed – El Pescador Resort Hotel";
+}
+
+<style>
+    :root {
+        --primary-color: #0A1A2F;
+        --secondary-color: #1E3A8A;
+        --gold-accent: #D4AF37;
+        --gold: #e0a800;
+        --neutral-bg: #FAF9F6;
+        --beige: #FBF1E3;
+        --muted: #6c757b;
+        --sand-bg: #F5E6C8;
+    }
+
+    body {
+        background: var(--neutral-bg);
+    }
+
+    .confirm-wrapper {
+        max-width: 750px;
+        margin: 60px auto;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .confirm-card {
+        background: white;
+        padding: 40px;
+        border-radius: 18px;
+        box-shadow: 0px 18px 40px rgba(0,0,0,0.10);
+        border-left: 6px solid var(--gold-accent);
+        animation: fadeIn .4s ease;
+    }
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .check-icon {
+        font-size: 70px;
+        color: var(--gold);
+        margin-bottom: 20px;
+        text-shadow: 0px 3px 12px rgba(212,175,55,0.4);
+    }
+
+    .confirm-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 32px;
+        color: var(--primary-color);
+        margin-bottom: 10px;
+    }
+
+    .details-box {
+        background: var(--beige);
+        padding: 20px;
+        border-radius: 14px;
+        margin-top: 25px;
+        text-align: left;
+        border-left: 5px solid var(--gold);
+    }
+
+        .details-box p {
+            margin: 6px 0;
+            font-size: 16px;
+        }
+
+    .ref-code {
+        font-weight: 700;
+        color: var(--secondary-color);
+        letter-spacing: 1px;
+        font-size: 18px;
+    }
+
+    .btn-back {
+        margin-top: 28px;
+        padding: 14px 28px;
+        background: linear-gradient(90deg, var(--secondary-color), var(--primary-color));
+        color: white;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+        transition: .2s ease;
+    }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+</style>
+
+<div class="confirm-wrapper">
+
+    <div class="confirm-card">
+        <div class="check-icon">✔</div>
+
+        <h2 class="confirm-title">Booking Requested!</h2>
+        <p>Thank you for choosing <b>El Pescador Resort Hotel</b>.</p>
+
+        <p>Your booking reference is:</p>
+        <p class="ref-code">@Model.ReferenceCode</p>
+
+        <div class="details-box">
+            <p><b>Type:</b> @Model.ItemTypeDisplay</p>
+            <p><b>Check-In:</b> @Model.CheckInDate.ToString("MMMM dd, yyyy")</p>
+            <p><b>Check-Out:</b> @Model.CheckOutDate.ToString("MMMM dd, yyyy")</p>
+            <p><b>Nights:</b> @Model.Nights</p>
+            <p><b>Total Cost:</b> <span style="color:var(--primary-color); font-weight:700;">&#8369;@Model.Total.ToString("N0")</span></p>
+        </div>
+
+        <a class="btn-back" href="/HomeIndex">Return to Home</a>
+    </div>
+
+</div>

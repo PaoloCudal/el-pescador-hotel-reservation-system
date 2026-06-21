@@ -1,0 +1,257 @@
+﻿@page "/Venues"
+@model HotelReservationWeb.Pages.VenuesModel
+@{
+    ViewData["Title"] = "Venues – El Pescador Resort Hotel";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="/css/Venues.css" />
+<link rel="stylesheet" href="/css/UserModal.css" />
+
+<style>
+    
+</style>
+
+<!-- NAVBAR (same markup as other pages) -->
+<nav id="mainNav" class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" asp-page="/HomeIndex">El Pescador</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navMenu" class="collapse navbar-collapse justify-content-end align-items-center">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Rooms">Rooms</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Amenities">Amenities</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Venues">Venues</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#discover">Discover</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#contact">Contact</a></li>
+            </ul>
+
+            <div class="dropdown ms-3" id="profileDropdown">
+                <button class="btn profile-circle"
+                        id="profileMenuBtn"
+                        type="button">
+                    <i class="bi bi-person-fill fs-4"></i>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end elegant-dropdown"
+                    aria-labelledby="profileMenuBtn">
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="venues-hero">
+    <div class="hero-inner">
+        <h1>Venues & Event Spaces</h1>
+        <p class="lead" style="color:rgba(255,255,255,0.92); margin-top:.6rem;">Elegant spaces for weddings, corporate events and celebrations.</p>
+    </div>
+    <div class="weather-widget" style="position:absolute;top:20px;right:30px;color:white;opacity:0.95;font-size:1rem;z-index:3;">
+        <span id="weatherContent"><i class="bi bi-cloud-sun"></i> Loading weather...</span>
+    </div>
+</header>
+
+<!-- PAGE CONTENT -->
+<main class="container-venues">
+    <div class="controls">
+        <div class="search-input">
+            <i class="bi bi-search"></i>
+            <input type="text" id="searchInput" placeholder="Search venues (e.g. beach, hall)">
+        </div>
+
+        <select id="sortSelect" class="sort-select">
+          <option value="default">Sort: Default</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+          <option value="capacity-desc">Capacity: High → Low</option>
+          <option value="capacity-asc">Capacity: Low → High</option>
+        </select>
+
+        <button id="toggleFavoritesBtn" class="btn" aria-expanded="false">❤️ See your favorites</button>
+    </div>
+
+
+    <div id="favoritesPanel" class="favorites-panel" aria-hidden="true">
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <strong>Your favorites</strong>
+            <div>
+                <button id="clearFavoritesBtn" class="btn btn-sm btn-outline-danger">Clear</button>
+            </div>
+        </div>
+        <div id="favoritesList" class="d-flex align-items-start"></div>
+        <div id="favoritesEmpty" class="favorites-empty mt-2">You haven't added any favorites yet.</div>
+        <template id="favoriteSkeleton">
+            <div class="favorites-thumbnail skeleton">
+                <div class="skeleton-img"></div>
+                <div class="skeleton-text"></div>
+            </div>
+        </template>
+    </div>
+
+
+    <!-- Dynamic venues -->
+    <div id="venuesGrid" class="row g-4 justify-content-center"></div>
+
+    <!-- Dynamic modals -->
+    <div id="venueModalsContainer" ></div>
+</main>
+
+<!-- USER PROFILE MODAL (BOOTSTRAP) -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+
+            <!-- HEADER -->
+            <div class="modal-header rounded-top-4">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-person-circle me-2"></i> My Account
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+
+                <!-- USER INFO -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold text-primary mb-3">Profile Information</h6>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <small class="text-muted">Full Name</small>
+                                <div class="fw-semibold" id="profileFullName">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Email</small>
+                                <div class="fw-semibold" id="profileEmail">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Join Date</small>
+                                <div class="fw-semibold" id="profileJoinDate">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Favorites</small>
+                                <div class="fw-semibold d-flex flex-column gap-1 mt-1">
+                                    <span id="profileFavoriteRooms" class="profile-value">
+                                        Favorite Rooms: 0
+                                    </span>
+                                    <span id="profileFavoriteVenues" class="profile-value">
+                                        Favorite Venues: 0
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVE BOOKINGS -->
+                <h6 class="fw-bold text-primary mb-3">Bookings History</h6>
+                <div id="activeBookingsList" class="vstack gap-3">
+                    <!-- booking cards injected here -->
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/venues.js"></script>
+
+<script>
+        (function(){
+        document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(el => new bootstrap.Dropdown(el));
+
+        // ---------------------------
+        // Venue elements
+        // ---------------------------
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const venuesGrid = document.getElementById('venuesGrid');
+        const toggleFavoritesBtn = document.getElementById('toggleFavoritesBtn');
+        const favoritesPanel = document.getElementById('favoritesPanel');
+        const favoritesList = document.getElementById('favoritesList');
+        const favoritesEmpty = document.getElementById('favoritesEmpty');
+        const clearFavoritesBtn = document.getElementById('clearFavoritesBtn');
+
+        // SweetAlert: Book Now button     
+        document.body.addEventListener("click", function(e) {
+            if(e.target && e.target.classList.contains("book-now")){
+                e.preventDefault();
+                const venueName = e.target.dataset.venue || 'this venue';
+                Swal.fire({
+                    html: `
+                        <div style="display:flex; align-items:center; justify-content:center; flex-direction:column;">
+                            <img src="/images/icon/icon.png" alt="Book Now" style="width:60px; height:60px; margin-bottom:10px;" />
+                            <h3 style="margin:0; font-weight:700;">Book ${venueName.charAt(0).toUpperCase() + venueName.slice(1)}</h3>
+                            <p>Please log in or sign up before booking at <strong>${venueName}</strong></p>
+                        </div>
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: "Log In",
+                    cancelButtonText: "Sign Up",
+                    confirmButtonColor: "#007bff",
+                    cancelButtonColor: "#28a745",
+                    reverseButtons: true,
+                    backdrop: `rgba(0,0,0,0.7)`
+                }).then(result => {
+                    if(result.isConfirmed) window.location.href="/UserLogin";
+                    else if(result.dismiss === Swal.DismissReason.cancel) window.location.href="/UserRegistration";
+                });
+            }
+        });
+
+    })();
+        // IIFE
+             const OPENWEATHERMAP_API_KEY = 'YOUR_OPENWEATHER_API_KEY';
+                    const defaultCity = 'Bolinao';
+                    async function fetchWeather(city) {
+                        const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${OPENWEATHERMAP_API_KEY}`;
+                        const res = await fetch(url);
+                        return await res.json();
+                    }
+                    async function renderWeather() {
+                        const el = document.getElementById('weatherContent');
+                        if (!el) return;
+                        el.innerHTML = '<i class="bi bi-cloud-sun"></i> Loading...';
+                        try {
+                            const data = await fetchWeather(defaultCity);
+                            if (data.weather) {
+                                const icon = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+                                el.innerHTML = `<strong>${data.name}</strong> <img src="${icon}" alt="${data.weather[0].description}" /> ${Math.round(data.main.temp)}°C • ${data.weather[0].description}`;
+                            } else {
+                                el.textContent = '⚠️ Weather unavailable';
+                            }
+                        } catch (err) {
+                            el.textContent = '⚠️ Error loading weather';
+                        }
+                    }
+                    renderWeather();
+</script>

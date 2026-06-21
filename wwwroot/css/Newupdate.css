@@ -1,0 +1,522 @@
+﻿:root {
+    --tropical-blue: #1a7fe0;
+    --tropical-blue-dark: #166bbf;
+    --bg-soft: #eaf4ff;
+    --border-soft: #d5e7f7;
+    --text-dark: #1f2d3d;
+}
+
+body {
+    font-family: Inter, sans-serif;
+    background-color: var(--bg-soft);
+    color: var(--text-dark);
+}
+
+.update-page {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+h2 {
+    color: var(--tropical-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* =========================
+               FORM CONTROLS
+            ========================= */
+
+.form-select,
+.form-control {
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    padding-right: 2.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        outline: none;
+        border-color: var(--tropical-blue);
+        box-shadow: 0 0 6px rgba(26, 127, 224, 0.3);
+    }
+
+/* =========================
+               FLOATING LABELS
+            ========================= */
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+    .input-wrapper input,
+    .input-wrapper textarea {
+        width: 100%;
+        border: 1px solid var(--border-soft);
+        border-radius: 8px;
+        padding: 12px;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border 0.25s ease, outline 0.25s ease;
+        resize: none;
+    }
+
+        .input-wrapper input:focus,
+        .input-wrapper textarea:focus {
+            border: 2px solid var(--tropical-blue);
+        }
+
+        .input-wrapper input::placeholder,
+        .input-wrapper textarea::placeholder {
+            color: transparent; /* hides placeholder text for floating label */
+        }
+
+    /* floating label */
+    .input-wrapper label {
+        position: absolute;
+        left: 12px;
+        top: 14px;
+        color: #5f6368;
+        font-size: 14px;
+        pointer-events: none;
+        background: #fff;
+        padding: 0 4px;
+        transition: 0.2s ease all;
+    }
+
+    .input-wrapper input:focus + label,
+    .input-wrapper input:not(:placeholder-shown) + label,
+    .input-wrapper textarea:focus + label,
+    .input-wrapper textarea:not(:placeholder-shown) + label {
+        top: -8px;
+        left: 8px;
+        font-size: 12px;
+        color: var(--tropical-blue);
+    }
+
+/* =========================
+               BUTTONS
+            ========================= */
+
+.btn-primary {
+    background: var(--tropical-blue);
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1.2rem;
+}
+
+    .btn-primary:hover {
+        background: var(--tropical-blue-dark);
+    }
+
+.btn-secondary {
+    background: #dcecff;
+    border: none;
+    color: var(--text-dark);
+    border-radius: 12px;
+}
+
+    .btn-secondary:hover {
+        background: #cfe2ff;
+    }
+
+/* =========================
+               LIST ITEMS
+            ========================= */
+
+.list-group-item {
+    border-radius: 12px;
+    margin-bottom: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid var(--border-soft);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .list-group-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(26, 127, 224, 0.15);
+    }
+
+/* =========================
+               MODAL
+            ========================= */
+
+/* Remove default Bootstrap modal shadow */
+.modal-dialog {
+    box-shadow: none !important;
+}
+
+/* Modal content with normal border */
+.modal-content {
+    border-radius: 18px;
+    background: #fff;
+    border: 2px solid var(--border-soft); /* default gray border */
+    display: flex;
+    flex-direction: column;
+    transition: border 0.25s ease; /* smooth border transition */
+    box-shadow: none; /* remove any shadow */
+}
+
+/* On modal show, show blue border like focused input */
+.modal.show .modal-content {
+    border-color: var(--tropical-blue);
+    box-shadow: none; /* ensure no shadow */
+}
+
+.modal-header {
+    background: var(--tropical-blue);
+    color: #fff;
+    border-bottom: none;
+}
+
+.modal-body {
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    padding-right: 12px;
+    scroll-behavior: smooth;
+}
+
+.modal-footer {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid var(--border-soft);
+    z-index: 10;
+}
+
+/* =========================
+               SCROLLBAR
+            ========================= */
+
+/* =========================
+               MODAL SCROLLBAR
+            ========================= */
+
+/* Webkit browsers (Chrome, Edge, Safari) */
+.modal-body::-webkit-scrollbar {
+    width: 10px; /* slightly wider */
+    cursor: pointer; /* show pointer on hover */
+}
+
+.modal-body::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.25);
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    cursor: pointer; /* show pointer when hovering over thumb */
+}
+
+    .modal-body::-webkit-scrollbar-thumb:hover {
+        background-color: rgba(0, 0, 0, 0.45);
+    }
+
+/* Firefox */
+.modal-body {
+    max-height: calc(100vh - 220px);
+    overflow-y: auto;
+    padding-right: 12px;
+    scroll-behavior: smooth;
+    /* Force scrollbar to render immediately */
+    will-change: scroll;
+    -webkit-overflow-scrolling: touch; /* smooth scroll for iOS */
+}
+
+/* =========================
+               IMAGES & THUMBNAILS
+            ========================= */
+
+.thumb {
+    width: 72px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 6px;
+    border: 1px solid var(--border-soft);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .thumb:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(26, 127, 224, 0.15); /* subtle blue shadow to match UI theme */
+    }
+
+.image-list {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 3px;
+}
+
+.image-thumb-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-thumb-remove {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    cursor: pointer;
+    color: var(--tropical-blue-dark); /* matches UI theme */
+    font-size: 1rem; /* slightly smaller for cleaner look */
+    background: #fff;
+    border-radius: 50%;
+    padding: 0 4px;
+    border: 1px solid var(--tropical-blue-dark); /* border matches theme */
+    line-height: 1;
+    opacity: 0.85;
+    transition: opacity 0.2s, color 0.2s, transform 0.2s;
+}
+
+    .image-thumb-remove:hover {
+        opacity: 1;
+        color: var(--tropical-blue); /* lighter blue on hover */
+        transform: scale(1.1);
+    }
+
+/* =========================
+               ROOM TYPE TOGGLE
+            ========================= */
+
+.room-type-toggle {
+    display: flex;
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f7f7f7;
+    margin-top: 5px;
+}
+
+.toggle-option {
+    flex-grow: 1;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .toggle-option:hover:not(.active) {
+        background: var(--border-soft);
+    }
+
+    .toggle-option.active {
+        background: var(--tropical-blue);
+        color: #fff;
+        font-weight: 600;
+    }
+
+/* =========================
+               TEXT & HIGHLIGHT
+            ========================= */
+
+.small-muted {
+    color: #6c757d;
+}
+
+mark {
+    background-color: #e9ecef;
+    color: #212529;
+    padding: 0 3px;
+    border-radius: 3px;
+}
+
+/* =========================
+               MODAL ANIMATION
+            ========================= */
+
+.modal.fade .modal-dialog {
+    transform: translateY(20px);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0);
+}
+
+/* =========================
+               SORT BUTTON + ARROW ROTATION
+            ========================= */
+
+.btn-sort-round {
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .btn-sort-round i {
+        transition: transform 0.25s ease;
+    }
+
+    /* Ascending */
+    .btn-sort-round.sort-asc i {
+        transform: rotate(0deg);
+    }
+
+    /* Descending */
+    .btn-sort-round.sort-desc i {
+        transform: rotate(180deg);
+    }
+
+/* Base badge style */
+.room-badge {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 12px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+    /* Badge variations */
+    .room-badge.luxury {
+        background-color: #0d6efd; /* Bootstrap blue */
+        color: #ffffff;
+    }
+
+    .room-badge.best-value {
+        background-color: #ffc107; /* Bootstrap yellow */
+        color: #000000;
+    }
+
+    .room-badge.most-popular {
+        background-color: #dc3545; /* Bootstrap red */
+        color: #ffffff;
+    }
+
+.form-check {
+    margin-bottom: 0.75rem; /* spacing between checkboxes */
+    display: flex;
+    align-items: center; /* vertically center input + label */
+    gap: 0.5rem; /* space between checkbox and label */
+}
+
+    .form-check input[type="checkbox"] {
+        width: 1.25rem;
+        height: 1.25rem;
+        cursor: pointer;
+    }
+
+    .form-check label {
+        margin: 0; /* remove default margin */
+        font-size: 0.95rem; /* slightly smaller than default */
+        user-select: none;
+    }
+
+.skeleton-thumb {
+    width: 72px;
+    height: 48px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+.skeleton-line {
+    height: 12px;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    margin-bottom: 6px;
+}
+
+    .skeleton-line.short {
+        width: 50%;
+    }
+
+.button-skeleton {
+    width: 80px;
+    height: 28px;
+    border-radius: 6px;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+}
+
+.toast {
+    position: relative;
+    min-width: 250px;
+    max-width: 350px;
+    margin-bottom: 10px;
+    padding: 12px 20px;
+    border-radius: 6px;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .toast.success {
+        background-color: #00bfa5;
+    }
+
+    .toast.error {
+        background-color: #f44336;
+    }
+
+    .toast .progress {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        height: 4px;
+        background-color: rgba(255,255,255,0.7);
+    }
+
+@keyframes progressAnim {
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
+}
+
+
+

@@ -1,0 +1,315 @@
+﻿:root {
+    --tropical-blue: #1a7fe0;
+    --tropical-blue-dark: #166bbf;
+    --bg-soft: #eaf4ff;
+    --border-soft: #d5e7f7;
+    --text-dark: #1f2d3d;
+}
+
+/* Body and page layout */
+body {
+    font-family: Inter, sans-serif;
+    background-color: var(--bg-soft);
+    color: var(--text-dark);
+}
+
+.update-page {
+    margin-top: 0;
+    padding-top: 0;
+    background-color: var(--bg-soft);
+}
+
+h2 {
+    color: var(--tropical-blue);
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Form controls */
+.form-select,
+.form-control {
+    border-radius: 12px;
+    border: 1px solid var(--border-soft);
+    background: #fff;
+    padding-right: 2.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        outline: none;
+        border-color: var(--tropical-blue);
+        box-shadow: 0 0 6px rgba(26, 127, 224, 0.3);
+    }
+
+/* Status badges */
+.badge-occupied {
+    background-color: #dc3545; /* red */
+    color: #fff;
+    font-weight: 600;
+    padding: 0.45em 0.75em;
+    border-radius: 0.5rem;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px; /* optional: matches approved/accept width */
+}
+
+.badge-approved {
+    background-color: #0d6efd; /* blue */
+    color: #fff;
+    font-weight: 600;
+    padding: 0.45em 0.75em;
+    border-radius: 0.5rem;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px;
+}
+
+.badge-pending {
+    background-color: #ffc107; 
+    color: #000;
+    font-weight: 600;
+    padding: 0.45em 0.75em; 
+    border-radius: 0.5rem; 
+    display: inline-block;
+    text-align: center;
+    min-width: 80px; 
+}
+
+/* Accept button */
+.btn-accept {
+    background-color: #0d6efd; 
+    color: #fff;
+    font-weight: 600;
+    padding: 0.45em 0.75em; 
+    border-radius: 0.5rem;
+    display: inline-block;
+    text-align: center;
+    min-width: 80px; 
+}
+
+    .btn-accept:hover {
+        background-color: var(--tropical-blue-dark);
+        color: #fff;
+    }
+
+/* Custom tooltip styling */
+.tooltip.bs-tooltip-top .tooltip-inner,
+.tooltip.bs-tooltip-bottom .tooltip-inner,
+.tooltip.bs-tooltip-start .tooltip-inner,
+.tooltip.bs-tooltip-end .tooltip-inner {
+    background-color: #dc3545; 
+    color: #fff;
+    font-size: 0.75rem; /* smaller font */
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    max-width: 200px; /* optional: limit width */
+    text-align: center;
+}
+
+.tooltip.bs-tooltip-top .tooltip-arrow::before,
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before,
+.tooltip.bs-tooltip-start .tooltip-arrow::before,
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+    border-color: #dc3545; /* arrow matches badge color */
+}
+
+    /* Table header fixed */
+    .table-responsive.custom-scroll thead,
+    .table-responsive.custom-scroll thead tr {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    /* Scrollable tbody */
+    .table-responsive.custom-scroll tbody {
+        display: block;
+        max-height: 500px; /* same as container */
+        overflow-y: auto;
+        width: 100%;
+    }
+
+        /* Rows in tbody full width */
+        .table-responsive.custom-scroll tbody tr {
+            display: table;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+            /* Hover effect preserved */
+            .table-responsive.custom-scroll tbody tr:hover > * {
+                background-color: rgba(234, 244, 255, 0.6) !important;
+            }
+
+        /* Scrollbar styling for tbody only */
+
+        /* Webkit (Chrome, Edge, Safari) */
+        .table-responsive.custom-scroll tbody::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .table-responsive.custom-scroll tbody::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .table-responsive.custom-scroll tbody::-webkit-scrollbar-thumb {
+            background-color: rgba(128, 128, 128, 0.5);
+            border-radius: 10px;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+        }
+
+            .table-responsive.custom-scroll tbody::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(128, 128, 128, 0.8);
+            }
+
+    /* Firefox */
+    .table-responsive.custom-scroll tbody {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(128,128,128,0.5) transparent;
+    }
+
+    /* Optional: smooth scrolling */
+    .table-responsive.custom-scroll tbody {
+        scroll-behavior: smooth;
+    }
+
+/* ============================
+   Force table background to soft blue
+============================ */
+
+/* Table, all sections, rows, cells */
+#bookingTable,
+#bookingTable thead,
+#bookingTable tbody,
+#bookingTable tr,
+#bookingTable th {
+    background-color: var(--bg-soft) !important;
+}
+
+
+    /* Table header text */
+    #bookingTable thead th {
+        color: var(--text-dark);
+        font-weight: 600;
+        font-size: 0.85rem;
+        border-bottom: 1px solid var(--border-soft);
+        padding: 0.75rem;
+    }
+
+    /* Table rows */
+    #bookingTable tbody td {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* Hover effect (slightly darker soft blue) */
+    #bookingTable.table-hover > tbody > tr:hover > * {
+        background-color: rgba(234, 244, 255, 0.6) !important; /* semi-transparent overlay on soft blue */
+    }
+
+    /* Optional: remove default Bootstrap row borders */
+    #bookingTable > :not(caption) > * > * {
+        border-bottom: none;
+    }
+
+.search-input {
+    background-color: white;
+    border: 2px solid var(--tropical-blue);
+    border-radius: 12px;
+    padding: 0.3rem 1rem;
+    font-size: 0.9rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    max-width: 400px; /* 🔥 adjust this */
+    width: 100%;
+}
+    .search-input:focus {
+        outline: none;
+        border-color: var(--tropical-blue-dark);
+    }
+
+/* Search keyword highlight */
+.search-highlight {
+    background-color: var(--tropical-blue);
+    color: #fff;
+    padding: 0.1rem 0.35rem;
+    border-radius: 0.35rem;
+    font-weight: 600;
+}
+
+.searchable {
+    font-weight: 600;
+}
+
+.btn-sort-category {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0.45rem 0.75rem;
+    background: #dcecff;
+    border: 1px solid var(--border-soft);
+    color: var(--text-dark);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 12px;
+    cursor: pointer;
+}
+    .btn-sort-category:hover {
+        background: #cfe2ff;
+    }
+
+    .btn-sort-category .sort-text {
+        opacity: 0.85;
+    }
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-reject:hover {
+    background-color: #bb2d3b;
+}
+
+.skeleton-row td {
+    padding: 0.75rem;
+}
+
+.skeleton {
+    height: 14px;
+    width: 100%;
+    border-radius: 6px;
+    background: linear-gradient( 90deg, #eaf4ff 25%, #dbeeff 37%, #eaf4ff 63% );
+    background-size: 400% 100%;
+    animation: skeleton-loading 1.4s ease infinite;
+}
+
+    .skeleton.badge {
+        height: 22px;
+        width: 80px;
+        border-radius: 8px;
+    }
+
+    .skeleton.button {
+        height: 30px;
+        width: 80px;
+        border-radius: 8px;
+    }
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+

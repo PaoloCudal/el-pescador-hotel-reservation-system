@@ -1,0 +1,329 @@
+﻿@page "/Rooms"
+@model HotelReservationWeb.Pages.Rooms.RoomsModel
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link rel="stylesheet" href="/css/Rooms.css" />
+<link rel="stylesheet" href="/css/UserModal.css" />
+
+<style>
+
+</style>
+<nav id="mainNav" class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" asp-page="/HomeIndex">El Pescador</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navMenu" class="collapse navbar-collapse justify-content-end align-items-center">
+            <ul class="navbar-nav ms-auto align-items-center">
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Rooms">Rooms</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Amenities">Amenities</a></li>
+                <li class="nav-item"><a class="nav-link" asp-page="/Venues">Venues</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#discover">Discover</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="/HomeIndex#contact">Contact</a></li>
+            </ul>
+
+            <div class="dropdown ms-3" id="profileDropdown">
+                <button class="btn profile-circle"
+                        id="profileMenuBtn"
+                        type="button">
+                    <i class="bi bi-person-fill fs-4"></i>
+                </button>
+
+                <ul class="dropdown-menu dropdown-menu-end elegant-dropdown"
+                    aria-labelledby="profileMenuBtn">
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Banner -->
+<section class="parallax-banner" aria-label="Hero banner">
+    <div class="parallax-overlay" aria-hidden="true"></div>
+    <div class="parallax-content">
+        <h1>Rooms & Suites</h1>
+        <p class="lead">Oceanfront comfort with modern amenities — select a building to see room details, photos and availability.</p>
+        <div>
+            <a class="btn btn-outline-light me-2" href="/HomeIndex#discover">Discover</a>
+        </div>
+    </div>
+    <div class="weather-widget" style="position:absolute;top:20px;right:30px;color:white;opacity:0.95;font-size:1rem;z-index:3;">
+        <span id="weatherContent"><i class="bi bi-cloud-sun"></i> Loading weather...</span>
+    </div>
+</section>
+<!-- PAGE -->
+<div class="search-sort-bar">
+    <div class="search-box">
+        <i class="bi bi-search text-muted"></i>
+        <input id="search" placeholder="Search rooms or buildings (eg. seaside, twin)" />
+    </div>
+
+   
+   <select id="sort" class="sort">
+    <option value="default">Sort: Default</option>
+    <option value="rooms-desc">Most Rooms</option>
+    <option value="rooms-asc">Least Rooms</option>
+    <option value="name-asc">Name: A → Z</option>
+    <option value="name-desc">Name: Z → A</option>
+   </select>
+
+    <div class="controls-right d-flex align-items-center">
+        <button id="toggleFavoritesBtn" class="btn" aria-expanded="false">❤️ See your favorites</button>
+    </div>
+</div>
+
+<!-- Favorites panel -->
+<div id="favoritesPanel" class="mb-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+        <strong>Your favorites</strong>
+        <button id="clearFavoritesBtn" class="btn btn-sm btn-outline-danger">Clear</button>
+    </div>
+    <div id="favoritesEmpty" class="text-muted small">You haven't added any favorites yet.</div>
+    <div id="favoritesList" class="mt-2"></div>
+</div>
+
+<!-- Building selection -->
+<section id="buildingSelect" class="py-4">
+    <div class="container">
+        <!-- SAME container as search bar -->
+
+        <h2 class="text-center mb-4"
+            style="font-family:'Playfair Display', serif;">
+            Select a building
+        </h2>
+
+        <div class="building-grid mb-4">
+            <div class="building-card"
+                 data-name="Seaside Grand"
+                 tabindex="0"
+                 role="button"
+                 onclick="showRooms('seaside')">
+                <img src="/images/SSG.JPG" alt="Seaside Grand">
+                <div class="building-caption">
+                    <h4>Seaside Grand</h4>
+                    <p>Ocean-facing suites • balcony rooms • family-friendly layouts</p>
+                    <small>Tap to view rooms & pricing</small>
+                </div>
+            </div>
+
+            <div class="building-card"
+                 data-name="Twin Building"
+                 tabindex="0"
+                 role="button"
+                 onclick="showRooms('twin')">
+                <img src="/images/TWINB.JPG" alt="Twin Building">
+                <div class="building-caption">
+                    <h4>Twin Building</h4>
+                    <p>Cozy & stylish • great for couples and small families</p>
+                    <small>Tap to view rooms & pricing</small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+
+<!-- SEASIDE GRAND -->
+<section id="seaside" class="rooms-section" style="display:none;">
+    <div class="mb-3">
+        <button class="btn btn-outline-secondary" onclick="backToBuildings()">← Back</button>
+    </div>
+
+    <h3 class="text-center mb-4" style="color:var(--gold)">Seaside Grand</h3>
+
+    <div class="rooms-grid">
+    </div>
+</section>
+
+<!-- TWIN BUILDING -->
+<section id="twin" class="rooms-section" style="display:none;">
+    <div class="mb-3">
+        <button class="btn btn-outline-secondary" onclick="backToBuildings()">← Back</button>
+    </div>
+
+    <h3 class="text-center mb-4" style="color:var(--gold)">Twin Building</h3>
+
+    <div class="rooms-grid">
+        <!-- JS injects room cards here -->
+    </div>
+</section>
+
+<div class="modal fade" id="modal0" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title"></h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                <div class="row gx-0">
+
+                    <!-- LEFT: CAROUSEL -->
+                    <div class="col-md-7 pe-md-3">
+                        <div id="carousel0" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner modal-gallery">
+                                <!-- JS injects images -->
+                            </div>
+
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carousel0" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+
+                            <button class="carousel-control-next" type="button" data-bs-target="#carousel0" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+
+                            <div class="d-flex mt-2">
+                                <!-- JS injects thumbnails -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: DETAILS -->
+                    <div class="col-md-5">
+                        <div class="p-3">
+                            <p class="text-muted"></p>
+
+                            <div class="mt-4 d-flex gap-2">
+                                <button class="btn btn-gold flex-grow-1">Book Now</button>
+                                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer border-0"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="favoritesModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title">Your Favorite Rooms</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="favoritesList" class="favorites-grid d-flex flex-wrap gap-3"></div>
+                <p class="no-favorites text-center text-muted mt-3" style="display:none;">
+                    You haven't added any favorites yet.
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<template id="favoriteSkeleton">
+    <div class="favorites-thumbnail skeleton">
+        <div class="skeleton-img"></div>
+        <div class="skeleton-text"></div>
+    </div>
+</template>
+
+<!-- USER PROFILE MODAL (BOOTSTRAP) -->
+<div class="modal fade" id="userProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow-lg rounded-4">
+
+            <!-- HEADER -->
+            <div class="modal-header bg-dark text-white rounded-top-4">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-person-circle me-2"></i> My Account
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- BODY -->
+            <div class="modal-body">
+
+                <!-- USER INFO -->
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body">
+                        <h6 class="fw-bold text-primary mb-3">Profile Information</h6>
+
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <small class="text-muted">Full Name</small>
+                                <div class="fw-semibold" id="profileFullName">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Email</small>
+                                <div class="fw-semibold" id="profileEmail">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Join Date</small>
+                                <div class="fw-semibold" id="profileJoinDate">—</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <small class="text-muted">Favorites</small>
+                                <div class="fw-semibold d-flex flex-column gap-1 mt-1">
+                                    <span id="profileFavoriteRooms" class="profile-value">
+                                        Favorite Rooms: 0
+                                    </span>
+                                    <span id="profileFavoriteVenues" class="profile-value">
+                                        Favorite Venues: 0
+                                    </span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTIVE BOOKINGS -->
+                <h6 class="fw-bold text-primary mb-3">Bookings History</h6>
+                <div id="activeBookingsList" class="vstack gap-3">
+                </div>
+
+            </div>
+
+            <!-- FOOTER -->
+            <div class="modal-footer">
+                <button class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+  <footer class="text-light">
+        <div class="container text-center">
+            <a class="btn btn-warning btn-lg shadow-lg mb-4 px-5" asp-page="/Accounts/Admin/StaffLogin">
+            <i class="bi bi-person-circle me-2"></i> Staff Login
+            </a>
+        <p class="mb-0 small">© 2025 El Pescador Resort Hotel — All Rights Reserved</p>
+       </div>
+    </footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="/js/site.js"></script>
+<script src="/js/Rooms.js"></script>

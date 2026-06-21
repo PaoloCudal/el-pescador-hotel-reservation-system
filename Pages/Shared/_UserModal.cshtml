@@ -1,0 +1,138 @@
+﻿
+
+<!-- User Profile Modal -->
+<div id="userProfileModal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300">
+    <div class="bg-neutral-bg rounded-2xl shadow-xl w-11/12 max-w-3xl p-6 relative transform translate-y-10 transition-transform duration-300">
+        <!-- Close Button -->
+        <button id="closeModalBtn" class="absolute top-4 right-4 text-primary-color hover:text-gold-accent transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                 viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+        <!-- User Info -->
+        <div class="mb-6 border-b pb-4">
+            <h2 class="text-2xl font-bold text-gold-accent mb-2">User Profile</h2>
+            <p class="text-text-color mb-1"><span class="font-semibold">Full Name:</span> <span id="profileFullName"></span></p>
+            <p class="text-text-color mb-1"><span class="font-semibold">Email:</span> <span id="profileEmail"></span></p>
+            <p class="text-text-color mb-1"><span class="font-semibold">Join Date:</span> <span id="profileJoinDate"></span></p>
+            <p class="text-text-color mb-1"><span class="font-semibold">Favorite Rooms:</span> <span id="profileFavoriteRooms"></span></p>
+            <p class="text-text-color"><span class="font-semibold">Favorite Venues:</span> <span id="profileFavoriteVenues"></span></p>
+        </div>
+
+        <!-- Active Bookings -->
+        <div>
+            <h3 class="text-xl font-semibold text-primary-color mb-4">Active Bookings</h3>
+            <div id="activeBookingsList" class="space-y-4 max-h-80 overflow-y-auto">
+                <!-- Booking cards injected here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openUserProfileModal(userId) {
+        const modal = document.getElementById('userProfileModal');
+        modal.classList.remove('hidden');
+        setTimeout(() => {
+            modal.classList.remove('opacity-0');
+            modal.querySelector('div').classList.remove('translate-y-10');
+        }, 10);
+
+        // Fetch user account info
+        fetch(`/api/booking/my-account/${userId}`)
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('profileFullName').textContent = data.fullName;
+                document.getElementById('profileEmail').textContent = data.email;
+                document.getElementById('profileJoinDate').textContent = new Date(data.joinDate).toLocaleDateString();
+                document.getElementById('profileFavoriteRooms').textContent = data.favoriteRoomsCount;
+                document.getElementById('profileFavoriteVenues').textContent = data.favoriteVenuesCount;
+            });
+
+        // Fetch active bookings
+        fetch(`/api/booking/active/${userId}`)
+            .then(res => res.json())
+            .then(bookings => {
+                const list = document.getElementById('activeBookingsList');
+                list.innerHTML = '';
+
+                bookings.forEach(b => {
+                    const card = document.createElement('div');
+                    card.className = "flex justify-between items-center p-4 bg-sand-bg rounded-xl shadow-md hover:shadow-xl transition-shadow transform hover:-translate-y-1";
+
+                    card.innerHTML = `
+                        <div>
+                            <p class="font-bold text-gold-accent">${b.bookingReference}</p>
+                            <p class="text-text-color text-sm">${b.facilityName}</p>
+                            <p class="text-text-color text-sm">${new Date(b.checkIn).toLocaleDateString()} - ${new Date(b.checkOut).toLocaleDateString()} (${b.nights} night(s))</p>
+                            <p class="text-text-color text-sm">Total: ₱${b.totalCost.toLocaleString()} | Payment: ${b.paymentType}</p>
+                        </div>
+                        <button class="cancelBookingBtn px-4 py-2 rounded-lg font-semibold text-black bg-gradient-to-r from-gold-accent to-gold shadow-md hover:from-gold hover:to-gold-accent hover:text-white transition-all">
+                            Cancel
+                        </button>
+                    `;
+
+                    // Cancel booking handler
+                    card.querySelector('.cancelBookingBtn').addEventListener('click', async () => {
+                        if (!confirm('Are you sure you want to cancel this booking?')) return;
+
+                        const res = await fetch(`/api/booking/cancel/${b.bookingReference}`, { method: 'POST' });
+                        if (res.ok) {
+                            alert('Booking cancelled');
+                            openUserProfileModal(userId); // refresh modal
+                        } else {
+                            const err = await res.json();
+                            alert(err.message || 'Failed to cancel booking');
+                        }
+                    });
+
+                    list.appendChild(card);
+                });
+            });
+    }
+
+    // Close modal
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+        const modal = document.getElementById('userProfileModal');
+        modal.querySelector('div').classList.add('translate-y-10');
+        modal.classList.add('opacity-0');
+        setTimeout(() => modal.classList.add('hidden'), 300);
+    });
+</script>
+
+<style>
+    #userProfileModal {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .text-primary-color {
+        color: var(--primary-color);
+    }
+
+    .text-text-color {
+        color: var(--text-color);
+    }
+
+    .bg-sand-bg {
+        background-color: var(--sand-bg);
+    }
+
+    .text-gold-accent {
+        color: var(--gold-accent);
+    }
+
+    .bg-gradient-to-r {
+        background: linear-gradient(90deg, var(--gold-accent), var(--gold));
+    }
+
+    .hover\:from-gold:hover {
+        background: var(--gold) !important;
+    }
+
+    .hover\:to-gold-accent:hover {
+        background: var(--gold-accent) !important;
+    }
+</style>

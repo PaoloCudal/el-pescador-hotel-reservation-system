@@ -1,0 +1,42 @@
+﻿@page "/UserLogin"
+@using HotelReservationWeb.Pages.Accounts.User.DTOs_Client
+@model HotelReservationWeb.Pages.Accounts.User.DTOs_Client.UserRegistration
+@{
+    Layout = null;
+}
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<link rel="stylesheet" href="/css/Userlogin.css" />
+
+<!-- Toast container must be at the top of body -->
+<div id="toast-container" class="toast-container"></div>
+
+<div class="container">
+    <div class="user-log">
+        <h2 class="user-title">USER LOGIN</h2>
+
+        <div class="input-wrapper">
+            <input id="email" type="email" placeholder=" " required />
+            <label for="email">Email / Username</label>
+            <span class="error-text" id="email-error"></span>
+        </div>
+
+        <div class="input-wrapper">
+            <input id="password" type="password" placeholder=" " required />
+            <label for="password">Password</label>
+            <span class="toggle-pass" onclick="togglePass(this)">
+                <span class="material-icons">visibility</span>
+            </span>
+        </div>
+        <span class="error-text" id="password-error"></span>
+
+        <div class="checkbox-wrap">
+            <input id="rememberMe" type="checkbox" />
+            <label for="rememberMe">Remember Me</label>
+        </div>
+
+        <button id="login-button" class="user-button">LOG IN</button>
+    </div>
+</div>
+
+<script src="/js/UserLogin.js"></script>

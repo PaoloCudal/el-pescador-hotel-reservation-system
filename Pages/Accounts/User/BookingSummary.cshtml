@@ -1,0 +1,49 @@
+@page "/BookingSummary"
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Booking Confirmed – El Pescador Resort Hotel";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/BookNow.css" />
+<div class="summary-page-wrapper">
+    <div class="aesthetic-card">
+        <div class="success-badge">
+            <span>&#10004;</span>
+        </div>
+
+        <h2 class="booking-title" style="border:none; padding:0; margin-bottom:10px;">Booking Confirmed!</h2>
+        <p class="text-muted">We have received your request. A confirmation email has been sent to your registered address.</p>
+
+        <div class="receipt-container">
+      <div class="receipt-row">
+        <span class="label">Reference</span>
+        <span class="value" id="resRef">---</span>
+    </div>
+    <div class="receipt-row">
+        <span class="label">Facility</span>
+        <span class="value" id="resFacility">---</span>
+    </div>
+    <div class="receipt-row">
+        <span class="label">Dates</span>
+        <span class="value" id="resDates">---</span>
+    </div>
+    <div class="receipt-row">
+        <span class="label">Status</span>
+        <span class="value" id="resStatus">---</span>
+    </div>
+
+    <div class="total-section">
+        <span class="label">Total Amount Paid</span>
+        <div class="price-amount" id="resPrice" style="color: var(--secondary-color); margin-top: 5px;">₱0</div>
+        <small class="text-muted" id="resDetails"></small>
+    </div>
+    </div>
+    </div>
+    
+    <a href="/HomeIndex" class="btn-back-home">
+            <i class="bi bi-arrow-left-circle-fill me-2"></i> Back to Home
+    </a>
+</div>
+
+<script src="js/BookingSummary.js"></script> 

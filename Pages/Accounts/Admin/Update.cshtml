@@ -1,0 +1,360 @@
+﻿@page "/Update"
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelReservationWeb.Pages.Accounts.Admin.UpdateModel
+@{
+    ViewData["Title"] = "Update Available Rooms, Venue, Amenities";
+    Layout = "_TopNavbar";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/Newupdate.css" />
+
+<style>
+   
+</style>
+
+<div class="update-page flex-grow-1 p-3">
+    <h2>Manage Hotel Facilities</h2>
+    <hr />
+
+    <div class="mb-3 d-flex flex-wrap align-items-center justify-content-between">
+        <div class="d-flex align-items-center mb-2">
+            <div class="dropdown me-3">
+                <button class="btn btn-primary dropdown-toggle d-flex align-items-center" type="button" id="facilityDropdownBtn" data-bs-toggle="dropdown">
+                    <i class="bi bi-list me-2"></i> Facilities
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="facilityDropdownBtn">
+                    <li><a class="dropdown-item" href="#" id="openAddFacility">Add Facility</a></li>
+                    <li><a class="dropdown-item" href="#" id="openRestoreUndo">Restore Undo</a></li>
+                </ul>
+            </div>
+
+            <!-- Search bar -->
+            <input type="text" id="facilitySearch" class="form-control w-auto" placeholder="Search Facility..." />
+        </div>
+
+        <!-- Category filter -->
+        <button id="sortBtn"
+                class="btn btn-secondary btn-sort-round ms-2"
+                type="button"
+                title="Sort by Category">
+            <i class="bi bi-arrow-down-up"></i>
+        </button>
+    </div>
+
+    <div class="list-group" id="mainFacilityList"></div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addFacilityModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Facility</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="addFacilityForm" enctype="multipart/form-data" novalidate>
+                <div class="modal-body">
+
+                    <!-- Name -->
+                    <div class="input-wrapper mb-3">
+                        <input name="Name" placeholder="Facility Name" required />
+                        <label>Facility Name</label>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="input-wrapper mb-3">
+                        <textarea name="Description" rows="3" placeholder="Description" required></textarea>
+                        <label>Description</label>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select id="addFacilityCategory" name="Category" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option value="Room">Room</option>
+                            <option value="Venue">Venue</option>
+                            <option value="Amenity">Amenity</option>
+                        </select>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="input-wrapper mb-3" id="addPriceGroup">
+                        <input name="Price" class="price-input" type="text" placeholder="Price" required/>
+                        <label>Price</label>
+                    </div>
+
+                    <!-- Building / Room Group (ROOM ONLY) -->
+                    <div class="mb-3" id="addRoomTypeGroup" style="display:none;">
+                        <label class="form-label">Building / Room Type</label>
+
+                        <!-- Building toggle -->
+                        <div class="room-type-toggle mb-2" id="addRoomTypeToggle">
+                            <button type="button" class="toggle-option active" data-room-type="Seaside Grand">
+                                Seaside Grand
+                            </button>
+                            <button type="button" class="toggle-option" data-room-type="Twin Building">
+                                Twin Building Rooms
+                            </button>
+                        </div>
+
+                        <!-- Frequently Booked selector -->
+                        <label class="form-label mt-2">Frequently Booked (Optional)</label>
+                        <select id="addRoomTypeSelect" class="form-select">
+                            <option value="None">None</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="Best Value">Best Value</option>
+                            <option value="Most Popular">Most Popular</option>
+                        </select>
+                        <input type="hidden" name="HomeIndexCategory" id="addHomeIndexHidden" value="" required/>
+                        <!-- FINAL value sent to backend -->
+                        <input type="hidden" name="RoomType" id="addRoomTypeHidden" value="" />
+                    </div>
+
+                    <!-- Capacity (VENUE ONLY) -->
+                    <div class="input-wrapper mb-3" id="addCapacityGroup"  style="display:none;">
+                        <input name="CapacityMin" type="number" placeholder="Minimum Capacity" required/>
+                        <label>Minimum Capacity</label>
+                    </div>
+
+                    <div class="input-wrapper mb-3" id="addCapacityMaxGroup"  style="display:none;">
+                        <input name="CapacityMax" type="number" placeholder="Maximum Capacity" required/>
+                        <label>Maximum Capacity</label>
+                    </div>
+
+                    <!-- Venue Features (show only if Category = Venue) -->
+                    <div id="addVenueFeatures" style="display:none;">
+                        <!-- Feature 1 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature1" placeholder="Feature 1 (e.g., Indoor)" />
+                            <label>Feature 1  </label>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature2" placeholder="Feature 2 (e.g., Outdoor)" />
+                            <label>Feature 2  </label>
+                        </div>
+
+                        <!-- Feature 3 (Meta Column) -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Meta" placeholder="Feature 3 / Meta (optional)" />
+                            <label>Feature 3 </label>
+                        </div>
+                    </div>
+
+                    <!-- Amenity Features (show only if Category = Amenity) -->
+                    <div id="addAmenityFeatures" style="display:none;">
+                        <!-- Feature 1 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature1" placeholder="Amenity Feature 1 (optional)" />
+                            <label>Amenity Feature 1</label>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature2" placeholder="Amenity Feature 2 (optional)" />
+                            <label>Amenity Feature 2</label>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Meta" placeholder="Amenity Feature 3 (optional)" />
+                            <label>Amenity Feature 3</label>
+                        </div>
+                    </div> 
+
+                    <!-- Upload Images -->
+                    <div class="mb-3">
+                        <label class="form-label">Upload Images</label>
+                        <input type="file" name="ImageFiles" class="form-control" multiple accept="image/*" />
+                        <div id="addImagePreview" class="image-list"></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="facilityEditModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Facility</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <form id="editFacilityForm" enctype="multipart/form-data" novalidate>
+                <input type="hidden" name="FacilityId" id="editFacilityId" />
+
+                <div class="modal-body">
+
+                    <!-- Name -->
+                    <div class="input-wrapper mb-3">
+                        <input name="Name" id="editFacilityName" required />
+                        <label>Facility Name</label>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="input-wrapper mb-3">
+                        <textarea name="Description" id="editFacilityDescription" rows="3" required></textarea>
+                        <label>Description</label>
+                    </div>
+
+                    <!-- Category -->
+                    <div class="mb-3">
+                        <label class="form-label">Category</label>
+                        <select id="editFacilityCategory" name="Category" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option value="Room">Room</option>
+                            <option value="Venue">Venue</option>
+                            <option value="Amenity">Amenity</option>
+                        </select>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="input-wrapper mb-3" id="editPriceGroup">
+                        <input name="Price" id="editFacilityPrice" class="price-input" type="text" required/>
+                        <label>Price</label>
+                    </div>
+
+
+                    <!-- Room-only options -->
+                    <div class="mb-3" id="editRoomTypeGroup" style="display:none;">
+                        <label class="form-label">Building / Room Type</label>
+
+                        <div class="room-type-toggle mb-2" id="editRoomTypeToggle">
+                            <button type="button" class="toggle-option active" data-room-type="Seaside Grand">
+                                Seaside Grand
+                            </button>
+                            <button type="button" class="toggle-option" data-room-type="Twin Building">
+                                Twin Building Rooms
+                            </button>
+                        </div>
+
+                        <label class="form-label mt-2">Frequently Booked (Optional)</label>
+                        <select id="editRoomTypeSelect" class="form-select">
+                            <option value="None">None</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="Best Value">Best Value</option>
+                            <option value="Most Popular">Most Popular</option>
+                        </select>
+                        <input type="hidden" name="HomeIndexCategory" id="editHomeIndexHidden" value="" />
+
+                        <input type="hidden" name="RoomType" id="editRoomTypeHidden" />
+                    </div>
+
+                    <!-- Capacity (VENUE ONLY) -->
+                    <div class="input-wrapper mb-3" id="editCapacityGroup" style="display:none;">
+                        <input name="CapacityMin" id="editCapacityMin" type="number" placeholder="Minimum Capacity" required/>
+                        <label>Minimum Capacity</label>
+                    </div>
+
+                    <div class="input-wrapper mb-3" id="editCapacityMaxGroup" style="display:none;">
+                        <input name="CapacityMax" id="editCapacityMax" type="number" placeholder="Maximum Capacity" required/>
+                        <label>Maximum Capacity</label>
+                    </div>
+
+                    <!-- Venue Features (show only if Category = Venue) -->
+                    <div id="editVenueFeatures" style="display:none;">
+                        <!-- Feature 1 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature1" placeholder="Feature 1 (e.g., Indoor)" />
+                            <label> Feature 1  </label>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature2" placeholder="Feature 2 (e.g., Outdoor)" />
+                            <label> Feature 2  </label>
+                        </div>
+
+                        <!-- Feature 3 (Meta Column) -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Meta" placeholder="Feature 3 / Meta (optional)" />
+                            <label>Feature 3  </label>
+                        </div>
+                    </div>
+
+                    <!-- Amenity Features (show only if Category = Amenity) -->
+                    <div id="editAmenityFeatures" style="display:none;">
+                        <!-- Feature 1 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature1" placeholder="Amenity Feature 1 (optional)" />
+                            <label>Amenity Feature 1</label>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Feature2" placeholder="Amenity Feature 2 (optional)" />
+                            <label>Amenity Feature 2</label>
+                        </div>
+
+                        <!-- Feature 3 -->
+                        <div class="input-wrapper mb-3">
+                            <input name="Meta" placeholder="Amenity Feature 2 (optional)" />
+                            <label>Amenity Feature 2</label>
+                        </div>
+                    </div>
+
+                    <!-- Existing Images -->
+                    <div class="mb-3">
+                        <label class="form-label">Existing Images</label>
+                        <div id="existingImagePreview" class="image-list"></div>
+                    </div>
+
+                    <!-- New Images -->
+                    <div class="mb-3">
+                        <label class="form-label">Add New Images</label>
+                        <input type="file" name="NewImages" class="form-control" multiple accept="image/*" />
+                        <div id="editImagePreview" class="image-list"></div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!-- Restore Undo Modal -->
+<div class="modal fade" id="restoreUndoModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Restore Deleted Facilities</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div id="restoreUndoList" class="list-group"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast-container"></div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.9/signalr.min.js"></script>
+<script src="/js/Update.js"></script>
+    
+

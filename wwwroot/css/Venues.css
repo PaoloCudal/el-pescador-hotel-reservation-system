@@ -1,0 +1,699 @@
+﻿:root {
+    --primary-color: #0A1A2F;
+    --gold: #e0a800;
+    --gold-accent: #D4AF37;
+    --muted: #6c757b;
+    --card-bg: #fff;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #F2F6FA;
+    color: var(--text-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--gold);
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px
+}
+/* NAVBAR */
+#mainNav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 1040;
+    background: rgba(10,26,47,0.95);
+    transition: background .35s ease, box-shadow .35s ease, padding .2s;
+    padding: .65rem 0;
+}
+
+    #mainNav .navbar-brand {
+        color: var(--gold-accent);
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+
+    #mainNav .nav-link {
+        color: #fff !important;
+        font-weight: 500;
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+        transition: color 0.3s ease;
+    }
+
+    #mainNav .nav-link {
+        margin: 0 0.75rem !important;
+        padding: 0 !important;
+    }
+
+        #mainNav .nav-link:hover {
+            color: var(--gold-accent) !important;
+        }
+
+/* Profile circle */
+.profile-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--gold-accent);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    cursor: pointer;
+}
+
+    .profile-circle:hover {
+        background: var(--gold-accent);
+        color: #000;
+    }
+
+/* HERO */
+.venues-hero {
+    height: 420px;
+    background-image: url('/images/7a071f6e-f24c-492d-bef6-e0b59ba8a1f0.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #fff;
+    margin-top: 5rem;
+    position: relative;
+}
+
+    .venues-hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(10,26,47,0.35), rgba(10,26,47,0.45));
+    }
+
+    .venues-hero .hero-inner {
+        position: relative;
+        z-index: 2;
+    }
+
+    .venues-hero h1 {
+        font-family: 'Playfair Display', serif;
+        color: var(--gold);
+        font-size: 2.5rem;
+        font-weight: 800;
+    }
+
+/* ===============================
+           Venues Page Controls (Match Rooms)
+           =============================== */
+
+/* Keep consistent container */
+.page {
+    max-width: 1150px;
+    margin: 2.5rem auto;
+    padding: 0 1rem;
+}
+
+/* Full control bar: search, sort, favorites */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 3rem;
+}
+
+/* ✅ Search bar — identical to Rooms */
+.search-input {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    background: #fff;
+    padding: .5rem 1rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 20px rgba(0,0,0,.06);
+}
+
+    .search-input i {
+        color: #999;
+    }
+
+    .search-input input {
+        border: none;
+        outline: none;
+        flex: 1;
+        background: transparent;
+    }
+
+/* ✅ Sort dropdown — identical to Rooms */
+.sort-select {
+    border-radius: 999px;
+    padding: .5rem 1rem;
+    border: none;
+    box-shadow: 0 6px 20px rgba(0,0,0,.06);
+    background: #fff;
+}
+
+/* ✅ Favorites button — identical look */
+#toggleFavoritesBtn {
+    border-radius: 12px;
+    background: #fff;
+    padding: .5rem .9rem;
+    border: 1px solid rgba(13,59,102,0.06);
+    font-weight: 600;
+    transition: background .2s;
+}
+
+    #toggleFavoritesBtn:hover {
+        background: #f8f8f8;
+    }
+
+/* Align all nicely centered like Rooms */
+.controls {
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+
+
+/* Venue card */
+.venue-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 18px 46px rgba(13,59,102,0.06);
+    transition: transform .35s ease, box-shadow .35s ease;
+    border: 1px solid rgba(10,26,47,0.04);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    height: 100%;       
+    margin-bottom: 0;    
+}
+
+    .venue-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 30px 70px rgba(10,26,47,0.12);
+    }
+
+.venue-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    flex-shrink: 0;      
+    transition: transform .6s ease;
+}
+
+.venue-card:hover .venue-image {
+    transform: scale(1.03);
+}
+
+.venue-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;             
+}
+
+.venue-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.venue-meta {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+.venue-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;    
+}
+
+.venue-price {
+    color: var(--gold);
+    font-weight: 800;
+}
+
+/* Fav icon */
+.fav-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 20;
+    background: rgba(255,255,255,0.95);
+    padding: 8px;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    border: 1px solid rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .12s ease;
+}
+
+    .fav-icon:hover {
+        transform: scale(1.05);
+    }
+
+    .fav-icon.text-danger {
+        color: var(--gold-accent) !important;
+        filter: drop-shadow(0 4px 8px rgba(208,170,46,0.12));
+    }
+
+/* Buttons */
+.btn-venue {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: .5rem .9rem;
+    border-radius: 10px;
+    font-weight: 700;
+    box-shadow: 0 8px 22px rgba(208,170,46,0.18);
+}
+
+    .btn-venue:hover {
+        background: var(--gold-accent);
+    }
+
+/* Favorites panel */
+.favorites-panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(13,59,102,0.04);
+    display: none;
+    margin-bottom: 18px;
+}
+
+.favorites-thumbnail {
+    width: 140px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    margin-right: 12px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+}
+
+    .favorites-thumbnail img {
+        width: 100%;
+        height: 90px;
+        object-fit: cover;
+        display: block;
+    }
+
+.favorites-empty {
+    color: var(--muted);
+    font-size: .95rem;
+}
+
+/* Modal premium tweaks */
+.modal-content {
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+.modal-header.bg-dark {
+    background: #222;
+    color: #fff;
+}
+
+.modal-venue-title {
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+    font-weight: 800;
+}
+
+.chip {
+    background: #fff8e6;
+    color: var(--primary-color);
+    padding: 6px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.03);
+    margin-right: 6px;
+}
+
+.btn-outline-secondary {
+    color: var(--primary-color);
+    border: 2px solid var(--gold);
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+    .btn-outline-secondary:hover {
+        background: var(--gold);
+        color: #000;
+    }
+
+/* Carousel icon color */
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    filter: invert(1) brightness(1.5);
+}
+
+.no-results {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #888;
+}
+
+footer {
+    background: linear-gradient(135deg, #001f3f, #003366);
+    color: #f1f1f1;
+    text-align: center;
+    margin-top: 10rem;
+    position: fixed;
+    z-index: 10;
+}
+
+    footer p {
+        margin: 0;
+        font-size: 1rem;
+    }
+
+.skeleton-card {
+    background: #f0f0f0;
+    border-radius: 8px;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeleton-image {
+    width: 100%;
+    height: 150px;
+    background: #e0e0e0;
+    border-radius: 8px 8px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-line {
+    width: 100%;
+    height: 16px;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+    .skeleton-line.w-50 {
+        width: 50%;
+    }
+
+/* Shimmer animation */
+.shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient( 90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100% );
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        left: -150%;
+    }
+
+    100% {
+        left: 150%;
+    }
+}
+
+/* ==============================
+   VENUE MODAL IMAGE FIX
+   ============================== */
+
+#venuesGrid + #venueModalsContainer .carousel-inner {
+    height: 420px; /* match room modal feel */
+}
+
+.venue-modal-img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover; /* 🔥 KEY */
+    object-position: center;
+    border-radius: 8px;
+}
+
+/* Prevent carousel jump */
+.carousel-item {
+    height: 420px;
+}
+
+@media (max-width: 768px) {
+    #venuesGrid + #venueModalsContainer .carousel-inner,
+    .venue-modal-img,
+    .carousel-item {
+        height: 260px;
+    }
+}
+
+/* Heart icon styles */
+.fav-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.0rem;
+    color: var(--gold); /* Yellow color */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+    /* Animation on click */
+    .fav-icon.animate {
+        transform: scale(1.3);
+    }
+
+.skeleton {
+    background: #1f1f1f;
+    border-radius: 10px;
+    width: 110px;
+    padding: 6px;
+}
+
+.skeleton-img {
+    width: 100%;
+    height: 70px;
+    border-radius: 6px;
+    background: linear-gradient( 90deg, #2a2a2a 25%, #3a3a3a 37%, #2a2a2a 63% );
+    animation: shimmer 1.4s infinite;
+}
+
+.skeleton-text {
+    height: 12px;
+    margin-top: 8px;
+    border-radius: 4px;
+    background: linear-gradient( 90deg, #2a2a2a 25%, #3a3a3a 37%, #2a2a2a 63% );
+    animation: shimmer 1.4s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200px 0;
+    }
+
+    100% {
+        background-position: 200px 0;
+    }
+}
+
+/* ==============================
+   Mini Favorite Venue Card
+   ============================== */
+.favorites-thumbnail {
+    width: 140px; /* keep same */
+    border-radius: 12px; /* slightly rounder */
+    overflow: hidden;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.08); /* subtle elevation */
+    margin-right: 14px;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: top;
+    background: #fff; /* card bg */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .favorites-thumbnail:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+    }
+
+    .favorites-thumbnail img {
+        width: 100%;
+        height: 90px;
+        object-fit: cover;
+        display: block;
+        border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+/* Optional: text under image if you have mini title */
+.favorites-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    padding: 6px 8px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ==============================
+   Mini Skeleton for Favorite Card
+   ============================== */
+.favorites-thumbnail.skeleton {
+    background: #f0f0f0;
+    position: relative;
+}
+
+    .favorites-thumbnail.skeleton .skeleton-img {
+        width: 100%;
+        height: 90px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+    .favorites-thumbnail.skeleton .skeleton-text {
+        height: 12px;
+        margin: 6px 8px 0 8px;
+        border-radius: 4px;
+        background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+    }
+
+/* Shimmer keyframes (redefine only once) */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* DATE LEGEND */
+.date-legend {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+}
+
+.date-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--muted);
+}
+
+.legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.legend-dot.selected { background: #4a90d9; }
+.legend-dot.available { background: #e2e8f0; border: 1px solid #ccc; }
+.legend-dot.booked { background: #e53e3e; }
+
+/* BOOKED DATE on calendar */
+.booked-date {
+    background: #e53e3e !important;
+    color: #fff !important;
+    border-radius: 50%;
+}
+
+.booked-date:hover {
+    background: #c53030 !important;
+}
+
+/* FP INPUT WRAPPER */
+.fp-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.fp-icon {
+    position: absolute;
+    left: 10px;
+    color: #999;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.fp-input-wrapper input {
+    padding-left: 32px;
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 0.9rem;
+    background: #fff;
+    cursor: pointer;
+}
+
+.booked-date {
+    background: #e53e3e !important;
+    color: #fff !important;
+    border-radius: 50%;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+    opacity: 0.8;
+}
+
+.booked-date:hover {
+    background: #e53e3e !important;
+}
+
+
+/* Flatpickr year input & arrows — black */
+.flatpickr-current-month .numInput.cur-year {
+    color: #000 !important;
+}
+
+.flatpickr-current-month .arrowUp,
+.flatpickr-current-month .arrowDown {
+    border-bottom-color: #000 !important;
+    border-top-color: #000 !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowUp:after {
+    border-bottom-color: #000 !important;
+}
+
+.flatpickr-current-month .numInputWrapper span.arrowDown:after {
+    border-top-color: #000 !important;
+}
+
+

@@ -1,0 +1,255 @@
+﻿@page "/UserRegistration"
+@using HotelReservationWeb.Pages.Accounts.User.DTOs_Client
+@model HotelReservationWeb.Pages.Accounts.User.DTOs_Client.UserRegistration
+@{
+    Layout = null;
+}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/UserRegistration.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+<div class="container">
+    <div class="panel-left"></div>
+    <div class="panel-right">
+        <h1 class="signup-text">Sign Up Here</h1>
+
+        <!-- Toast container -->
+        <div id="toast-container"></div>
+
+        <form id="regForm" class="signup-form">
+            <div class="grid">
+                <div class="form-row">
+                    <div class="textbox">
+                        <input name="Firstname" id="firstname" placeholder=" " required />
+                        <label for="firstname">First Name</label>
+                        <span class="errortxt" data-error="Firstname"></span>
+                    </div>
+
+                    <div class="textbox">
+                        <input name="Middlename" id="middlename" placeholder=" " />
+                        <label for="middlename">Middle Name</label>
+                        <span class="errortxt" data-error="Middlename"></span>
+                    </div>
+
+                    <div class="textbox">
+                        <input name="Lastname" id="lastname" placeholder=" " required />
+                        <label for="lastname">Last Name</label>
+                        <span class="errortxt" data-error="Lastname"></span>
+                    </div>
+
+                    <div class="textbox">
+                        <input name="FullAddress" id="fulladdress" placeholder=" " required />
+                        <label for="fulladdress">Full Address</label>
+                        <span class="errortxt" data-error="FullAddress"></span>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="textbox">
+                        <input name="Email" id="email" type="email" placeholder=" " required />
+                        <label for="email">Email</label>
+                        <span class="errortxt" data-error="Email"></span>
+                    </div>
+
+                    <div class="textbox">
+                        <div class="password-wrapper">
+                            <input name="Password" id="password" type="password" placeholder=" " required />
+                            <label>Password</label>
+                            <span class="toggle-password" onclick="togglePass(this)">
+                                <span class="material-icons">visibility</span>
+                            </span>
+                        </div>
+                        <span class="errortxt" data-error="Password"></span>
+                    </div>
+
+                    <div class="textbox">
+                        <div class="password-wrapper">
+                            <input name="ConfirmPassword" id="confirmPassword" type="password" placeholder=" " required />
+                            <label>Confirm Password</label>
+                            <span class="toggle-password" onclick="togglePass(this)">
+                                <span class="material-icons">visibility</span>
+                            </span>
+                        </div>
+                        <span class="errortxt" data-error="ConfirmPassword"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:20px;">
+                <button type="submit" class="register-btn">REGISTER</button>
+            </div>
+
+            <div class="terms-wrap">
+                <div class="terms-row">
+                    <input type="checkbox" name="TermsAndConditions" id="policy" />
+                    <label for="policy">
+                        I agree to the <a href="Terms">Terms & Conditions</a> & <a href="Pages">Privacy Policy</a>
+                    </label>
+                </div>
+                <span class="errortext" data-error="TermsAndConditions"></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+       function togglePass(el){
+        const input = el.closest('.password-wrapper').querySelector('input');
+        const icon = el.querySelector('.material-icons');
+        if(input.type === "password"){
+            input.type = "text";
+            icon.textContent = "visibility_off";
+        } else {
+            input.type = "password";
+            icon.textContent = "visibility";
+        }
+    }
+
+    function showError(field, msg){
+        const input = document.querySelector(`[name='${field}']`);
+        document.querySelector(`[data-error='${field}']`).textContent = msg;
+
+        if(msg){
+            input.classList.add("error");
+            input.classList.remove("valid");
+        } else {
+            input.classList.remove("error");
+            input.classList.add("valid");
+        }
+    }
+
+    function clearErrors(){
+        document.querySelectorAll("[data-error]").forEach(e => e.textContent = "");
+        document.querySelectorAll("input").forEach(e => {
+            e.classList.remove("error");
+            e.classList.remove("valid");
+        });
+    }
+
+    // ----- Toast function -----
+    function showToast(message, type="error", duration=3000){
+        const container = document.getElementById("toast-container");
+        const toast = document.createElement("div");
+        toast.className = `toast ${type}`;
+
+        // Message
+        const msgSpan = document.createElement("span");
+        msgSpan.textContent = message;
+        toast.appendChild(msgSpan);
+
+        // Close button
+        const closeBtn = document.createElement("span");
+        closeBtn.className = "close-btn";
+        closeBtn.innerHTML = "&times;";
+        closeBtn.onclick = () => toast.remove();
+        toast.appendChild(closeBtn);
+
+        // Progress bar
+        const progress = document.createElement("div");
+        progress.className = "progress";
+        progress.style.animationDuration = duration + "ms";
+        toast.appendChild(progress);
+
+        container.appendChild(toast);
+        setTimeout(() => toast.classList.add("show"), 100);
+
+        const timeout = setTimeout(() => {
+            toast.classList.remove("show");
+            setTimeout(() => toast.remove(), 500);
+        }, duration);
+
+        closeBtn.addEventListener("click", () => clearTimeout(timeout));
+    }
+
+    // ----- Live Email Validation -----
+    const emailInput = document.getElementById("email");
+    emailInput.addEventListener("input", async function(){
+        const email = this.value.trim();
+        if(email === "") { showError("Email","Email is required"); return; }
+
+        const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
+        if(!emailRegex.test(email)) { showError("Email","Invalid email format"); return; }
+
+        try{
+            const res = await fetch(`/api/auth/check-email?email=${encodeURIComponent(email)}`);
+            const data = await res.json();
+            if(data.exists){ showError("Email","Email already exists"); }
+            else { showError("Email",""); }
+        } catch(err){ console.log(err); }
+    });
+
+    // ----- Password Live Validation -----
+    const passwordInput = document.getElementById("password");
+    const confirmInput = document.getElementById("confirmPassword");
+
+    function validatePasswordLive(){
+        const pwd = passwordInput.value;
+        if(pwd === "") { showError("Password",""); return; }
+        const valid = pwd.length >= 8 && /[A-Z]/.test(pwd) && /[a-z]/.test(pwd) && /[0-9]/.test(pwd) && /[\W_]/.test(pwd);
+        if(!valid) showError("Password","Password must be 8+ chars, include uppercase, lowercase, number & special");
+        else showError("Password","");
+
+        validateConfirmPassword();
+    }
+
+    function validateConfirmPassword(){
+        if(confirmInput.value === "") { showError("ConfirmPassword",""); return; }
+        if(passwordInput.value !== confirmInput.value) showError("ConfirmPassword","Passwords do not match");
+        else showError("ConfirmPassword","");
+    }
+
+    passwordInput.addEventListener("input", validatePasswordLive);
+    confirmInput.addEventListener("input", validateConfirmPassword);
+
+    // ----- Form Submission -----
+    document.getElementById("regForm").addEventListener("submit", async (e)=>{
+        e.preventDefault();
+        clearErrors();
+
+        const data = {
+            Firstname: firstname.value.trim(),
+            Middlename: middlename.value.trim(),
+            Lastname: lastname.value.trim(),
+            FullAddress: fulladdress.value.trim(),
+            Email: email.value.trim(),
+            Password: password.value.trim(),
+            ConfirmPassword: confirmPassword.value.trim(),
+            TermsAndConditions: policy.checked
+        };
+
+        const pwdValid = data.Password.length >= 8 && /[A-Z]/.test(data.Password) && /[a-z]/.test(data.Password) && /[0-9]/.test(data.Password) && /[\W_]/.test(data.Password);
+        if(!pwdValid){ showToast("Password must be 8+ chars, include uppercase, lowercase, number & special", "error"); return; }
+        if(data.Password !== data.ConfirmPassword){ showToast("Passwords do not match", "error"); return; }
+        if(!data.TermsAndConditions){ showToast("You must agree to continue.", "error"); return; }
+
+        const btn = document.querySelector(".register-btn");
+        btn.disabled = true;
+
+        try{
+            const res = await fetch('/api/auth/register',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify(data)
+            });
+
+            const result = await res.json();
+            if(!res.ok){
+                if(result.message) showToast(result.message, "error");
+            } else {
+              showToast("Registration successful!", "success", 4000);
+              setTimeout(() => window.location.href = "/HomeIndex", 1500);
+
+            }
+        }catch(err){
+            console.log(err);
+            showToast("Server error. Please try again.", "error");
+        }
+
+        btn.disabled = false;
+    });
+
+</script>

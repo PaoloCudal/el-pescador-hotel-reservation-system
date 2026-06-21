@@ -1,0 +1,54 @@
+﻿@page "/CheckInOut"
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelReservationWeb.Pages.Accounts.Admin.CheckInOutModel
+@{
+    ViewData["Title"] = "Update Available Rooms, Venue, Amenities";
+    Layout = "_TopNavbar";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet" />
+<link rel="stylesheet" href="/css/BookManagement.css" />
+
+<div class="update-page flex-grow-1 p-3">
+    <h2>Booking Management</h2>
+    <hr />
+
+    <!-- Search + Sort -->
+    <div class="mb-3 d-flex flex-wrap align-items-center gap-2">
+        <input type="text"
+               id="bookingSearch"
+               class="form-control search-input"
+               placeholder="Search Booking..." />
+
+        <button id="sortCategoryBtn"
+                class="btn btn-sort-category"
+                type="button"
+                title="Sort by Category">
+            <i class="bi bi-arrow-down-up"></i>
+            <span class="sort-text">Sort by Category</span>
+        </button>
+    </div>
+
+    <!-- Table with scrollable tbody -->
+    <div class="table-responsive custom-scroll">
+        <table class="table table-hover align-middle booking-table" id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Booking Reference</th>
+                    <th>Facility Category</th>
+                    <th>Facility Name</th>
+                    <th>Booking Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Rows will be dynamically injected here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+<script src="/js/BookManagement.js"></script>

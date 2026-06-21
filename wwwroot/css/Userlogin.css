@@ -1,0 +1,370 @@
+﻿/* ---------- GENERAL STYLES ---------- */
+body {
+    background: linear-gradient(135deg, #fdfdfd, #f7f7f7, #f0f0f0);
+    font-family: 'Open Sans', 'Poppins', Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+    font-weight: 600;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+
+.user-log {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    text-align: center;
+    width: 360px;
+    max-width: 100%;
+}
+
+.user-title {
+    font-weight: 700;
+    font-size: 20px;
+    color: #1f1f1f;
+    margin-bottom: 25px;
+}
+
+/* ---------- INPUTS (LOGIN + FORGOT PASSWORD MODAL) ---------- */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+    .input-wrapper input {
+        width: 100%;
+        height: 42px;
+        border: 1px solid gray;
+        border-radius: 8px;
+        padding: 0 40px 0 12px;
+        outline: none;
+        background: transparent;
+        font-size: 14px;
+        box-sizing: border-box;
+        transition: border 0.25s ease, outline 0.25s ease;
+    }
+
+        .input-wrapper input::placeholder {
+            color: transparent; /* for floating label */
+        }
+
+        .input-wrapper input:focus {
+            border: 2px solid #1a73e8;
+        }
+
+    /* floating label */
+    .input-wrapper label {
+        position: absolute;
+        left: 12px;
+        top: 14px;
+        color: #5f6368;
+        font-size: 14px;
+        pointer-events: none;
+        background: white;
+        padding: 0 4px;
+        transition: 0.2s ease all;
+    }
+
+    .input-wrapper input:focus + label,
+    .input-wrapper input:not(:placeholder-shown) + label {
+        top: -8px;
+        left: 8px;
+        font-size: 12px;
+        color: #1a73e8;
+    }
+
+/* ---------- ERROR TEXT ---------- */
+.error-text {
+    color: red;
+    font-size: 0.75rem;
+    min-height: 14px;
+    margin-top: 3px;
+}
+
+input.input-validation-error {
+    border-color: red !important;
+}
+
+    input.input-validation-error + label {
+        color: red !important;
+    }
+
+/* ---------- PASSWORD TOGGLE ---------- */
+.toggle-pass {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #5f6368;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    height: 24px;
+}
+
+/* ---------- OTHER ---------- */
+.checkbox-wrap {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #5f6368;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.forgot-wrap a {
+    font-size: 12px;
+    color: #1a73e8;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+    .forgot-wrap a:hover {
+        color: #0b57d0;
+    }
+
+.user-button {
+    background: #01579B;
+    color: white;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%;
+    margin-top: 15px;
+}
+
+    .user-button:hover {
+        background: #004a85;
+    }
+
+/* ---------- TOAST ---------- */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.toast {
+    min-width: 280px;
+    max-width: 330px;
+    background: #1976d2;
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.toast-success {
+    background: #1976d2;
+}
+
+.toast-error {
+    background: #f44336;
+}
+
+.toast-close {
+    background: transparent;
+    border: none;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 5px;
+}
+
+    .toast-close:hover {
+        opacity: 0.7;
+    }
+
+.toast::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 4px;
+    width: 100%;
+    background: rgba(255,255,255,0.75);
+    animation: progressLine 3s linear forwards;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+@keyframes progressLine {
+    from {
+        width: 100%
+    }
+
+    to {
+        width: 0%
+    }
+}
+
+/* ---------- FORGOT PASSWORD MODAL ---------- */
+.forgot-password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none; /* hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+    .forgot-password-modal .modal-content {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        width: 360px;
+        max-width: 90%;
+        height: 300px; /* expanded height */
+        text-align: center;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+/* close button */
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    color: #888;
+}
+
+    .close-modal:hover {
+        color: #000;
+    }
+
+/* modal button */
+#forgotPasswordBtn {
+    padding: 10px 20px;
+    background: #01579B;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.forgot-password-modal h2 {
+    font-family: 'Inter', 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 24px;
+    color: #01579B; /* matches your button/nav accent */
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* ---------- FORGOT PASSWORD MODAL SUBTEXT ---------- */
+.forgot-password-modal p {
+    font-family: 'Open Sans', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #5f6368; /* subtle gray text */
+    text-align: center;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+    #forgotPasswordBtn:hover {
+        background: #004a85;
+    }
+
+    #forgotPasswordBtn.loading {
+        opacity: 0.6;
+        animation: pulse 1s infinite;
+    }
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* ---------- LOADING SPINNER ---------- */
+.spinner {
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #01579B;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    animation: spin 0.8s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* ---------- Reset Password Title & Description ---------- */
+.user-head {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1976d2;
+    text-align: center;
+}
+
+.user-descript {
+    font-size: 0.95rem;
+    color: #555555;
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.4;
+}
+

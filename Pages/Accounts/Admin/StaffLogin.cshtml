@@ -1,0 +1,49 @@
+@page "/StaffLogin"
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@model HotelReservationWeb.Pages.Accounts.Admin.StaffLoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Staff Portal | Hotel Reservation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/StaffLogin.css" />
+</head>
+<body>
+    <div class="login-card">
+        <span class="material-icons-round brand-icon">admin_panel_settings</span>
+        <h2>Staff Portal</h2>
+        <p>Enter your credentials to manage reservations</p>
+        
+        <form id="staffLoginForm">
+            <div class="input-group">
+                <i class="material-icons-round">alternate_email</i>
+                <input type="email" id="email" name="email" placeholder=" " required />
+                <label for="email" class="floating-label">Staff Email</label>
+                <span id="emailError" class="validation-msg"></span>
+            </div>
+
+            <div class="input-group">
+                <i class="material-icons-round">lock</i>
+                <input type="password" id="password" name="password" placeholder=" " required />
+                <label for="password" class="floating-label">Password</label>
+                <span class="material-icons-round show-password" id="toggleIcon" onclick="togglePassword()">visibility</span>
+                <span id="passwordError" class="validation-msg"></span>
+            </div>
+
+            <button type="submit" id="btnLogin" class="btn-login">Sign In</button>
+        </form>
+        
+        <div id="loginMessage" style="margin-top: 15px; font-size: 0.85rem; display: none;"></div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/StaffLogin.js"></script>
+</body>
+</html>
